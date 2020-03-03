@@ -19,6 +19,8 @@ public class Game extends Canvas implements Runnable {
   public MouseMotionInput mmi;
   public MouseInput mi;
   public KeyInput ki;
+  public Camera camera;
+
   private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"), new Rectangle(0, 0, 64, 64));
 
   public Game(){
@@ -33,6 +35,8 @@ public class Game extends Canvas implements Runnable {
     mmi = new MouseMotionInput(handler);
     mi = new MouseInput(handler);
     ki = new KeyInput();
+
+    camera = new Camera(0,0);
 
     this.addMouseListener(mi);
     this.addKeyListener(ki);
@@ -116,12 +120,17 @@ public class Game extends Canvas implements Runnable {
     ///////----DRAW IN HERE----///////
     //////////////////////////////////
 
-    g.setColor(new Color(50, 50, 50));
-    g2d.setPaint(paint);
+    g.setColor(new Color(92, 39, 39));
     g.fillRect(0, 0, size.width, size.height);
 
+    g2d.translate(-camera.getX(), -camera.getY());
+
+    g2d.setPaint(paint);
+    g.fillRect(-size.width, -size.height, size.width*3, size.height*3);
     handler.render(g, lag / MS_PER_UPDATE);
     gui.render(g, lag / MS_PER_UPDATE);
+
+    g2d.translate(camera.getX(), camera.getY());
 
     //////////////////////////////////
     g.dispose();
@@ -131,6 +140,12 @@ public class Game extends Canvas implements Runnable {
 
   //Runs every frame
   public void tick(){
+    for(int i = 0; i < handler.gameObjects.size(); i++){
+      if(handler.gameObjects.get(i).getID() == ID.PLAYER){
+        camera.tick(handler.gameObjects.get(i));
+      }
+    }
+
     handler.tick();
     gui.tick();
   }

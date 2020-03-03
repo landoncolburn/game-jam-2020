@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Handler {
 
-  private ArrayList<GameObject> gameObjects;
+  public ArrayList<GameObject> gameObjects;
 
   public Handler(){
     gameObjects = new ArrayList<GameObject>();
