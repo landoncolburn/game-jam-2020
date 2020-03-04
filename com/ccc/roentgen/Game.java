@@ -23,6 +23,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean paused = false;
 
 	public Dimension size;
+	public final Rectangle levelSize;
+	
 	public MouseMotionInput mmi;
 	public MouseInput mi;
 	public KeyInput ki;
@@ -33,7 +35,8 @@ public class Game extends Canvas implements Runnable {
 
 	public Game() {
 		size = new Dimension(1000, 600);
-		new Window("Game Jam", size, this);
+		levelSize = new Rectangle(-size.width, -size.height, size.width * 3, size.height * 3);
+		new Window("Roentgen", size, this);
 		start();
 
 		handler = new Handler();
@@ -51,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseMotionListener(mmi);
 
 		BufferedImageLoader.loadSpriteSheet("spritesheet.png");
+		
 
 		createWorld();
 	}
@@ -135,7 +139,7 @@ public class Game extends Canvas implements Runnable {
 		g2d.translate(-camera.getX(), -camera.getY());
 
 		g2d.setPaint(paint);
-		g.fillRect(-size.width, -size.height, size.width * 3, size.height * 3);
+		g.fillRect(levelSize.x, levelSize.y, levelSize.width, levelSize.height);
 		handler.render(g, lag / MS_PER_UPDATE);
 		gui.render(g, lag / MS_PER_UPDATE);
 

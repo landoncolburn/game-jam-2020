@@ -33,9 +33,12 @@ public class Player extends GameObject {
 
 		lastX = x;
 		lastY = y;
-
-		x += velX;
-		y += velY;
+		if((x+velX-32>Game.gameInstance.levelSize.x) && (x+velX+32<Game.gameInstance.levelSize.width)) {
+			x+=velX;
+		}
+		if((y+velY-32>Game.gameInstance.levelSize.y) && (y+velY+64<Game.gameInstance.levelSize.height)) {
+			y+=velY;
+		}
 
 		count++;
 		if (count > 20) {
