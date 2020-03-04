@@ -18,12 +18,12 @@ public class Player extends GameObject {
 
 	public Player(int x, int y) {
 		super(x, y, 64, 96, true, ID.PLAYER);
-		animations[0][0] = BufferedImageLoader.getSprite(0, 0, 32, 48);
-		animations[0][1] = BufferedImageLoader.getSprite(32, 0, 32, 48);
-		animations[1][0] = BufferedImageLoader.getSprite(192, 0, 32, 48);
-		animations[1][1] = BufferedImageLoader.getSprite(224, 0, 32, 48);
-		animations[2][0] = BufferedImageLoader.getSprite(256, 0, 32, 48);
-		animations[2][1] = BufferedImageLoader.getSprite(288, 0, 32, 48);
+		animations[0][0] = BufferedImageLoader.getSprite(64, 0, 32, 48);
+		animations[0][1] = BufferedImageLoader.getSprite(96, 0, 32, 48);
+		animations[1][0] = BufferedImageLoader.getSprite(128, 0, 32, 48);
+		animations[1][1] = BufferedImageLoader.getSprite(160, 0, 32, 48);
+		animations[2][0] = BufferedImageLoader.getSprite(192, 0, 32, 48);
+		animations[2][1] = BufferedImageLoader.getSprite(224, 0, 32, 48);
 	}
 
 	@Override
@@ -33,10 +33,10 @@ public class Player extends GameObject {
 
 		lastX = x;
 		lastY = y;
-		if((x+velX-32>Game.gameInstance.levelSize.x) && (x+velX+32<Game.gameInstance.levelSize.width)) {
+		if((x+velX-32>-Game.gameInstance.levelSize.width/2) && (x+velX+32<Game.gameInstance.levelSize.width/2)) {
 			x+=velX;
 		}
-		if((y+velY-32>Game.gameInstance.levelSize.y) && (y+velY+64<Game.gameInstance.levelSize.height)) {
+		if((y+velY-32>-Game.gameInstance.levelSize.height/2) && (y+velY+64<Game.gameInstance.levelSize.height/2)) {
 			y+=velY;
 		}
 
@@ -50,6 +50,7 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g, double p) {
 		g.setColor(Color.WHITE);
+		g.drawString("x: " + x + " y: " + y, x-40, y-40);
 		g.drawImage(animations[d][as], (int) ((x - lastX) * p + lastX - w / 2), (int) ((y - lastY) * p + lastY - h / 2),
 				w, h, null);
 	}
