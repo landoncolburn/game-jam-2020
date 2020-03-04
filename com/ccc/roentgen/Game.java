@@ -73,18 +73,14 @@ public class Game extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		this.requestFocus();
-		int frameCount = 0;
-		int fps = 0;
-		final double GAME_HERTZ = 60.0;
+		final double GAME_HERTZ = 120.0;
 		final double TIME_BETWEEN_UPDATES = 1000000000 / GAME_HERTZ;
 		final int MAX_UPDATES_BEFORE_RENDER = 5;
 		double lastUpdateTime = System.nanoTime();
 		double lastRenderTime = System.nanoTime();
 
-		final double TARGET_FPS = 60;
+		final double TARGET_FPS = 120;
 		final double TARGET_TIME_BETWEEN_RENDERS = 1000000000 / TARGET_FPS;
-
-		int lastSecondTime = (int) (lastUpdateTime / 1000000000);
 
 		while (running) {
 			double now = System.nanoTime();
