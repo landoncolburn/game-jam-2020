@@ -1,18 +1,19 @@
 package com.ccc.roentgen;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
 public class BufferedImageLoader {
 
 	public static BufferedImage spriteSheet;
+	public static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
 	public static BufferedImage loadImage(String path) {
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File(path));
+			image = ImageIO.read(classLoader.getResource(path));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
