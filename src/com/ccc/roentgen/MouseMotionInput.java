@@ -6,11 +6,9 @@ import java.awt.event.MouseMotionAdapter;
 
 public class MouseMotionInput extends MouseMotionAdapter {
 
-	private Handler handler;
 	private Point mousePos = null;
 
-	public MouseMotionInput(Handler handler) {
-		this.handler = handler;
+	public MouseMotionInput() {
 	}
 
 	@Override

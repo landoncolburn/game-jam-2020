@@ -6,17 +6,15 @@ import java.awt.event.MouseEvent;
 
 public class MouseInput extends MouseAdapter {
 
-	private Handler handler;
 	private Point mousePos;
+	private Point mouseDown;
 
-	public MouseInput(Handler handler) {
-		this.handler = handler;
+	public MouseInput() {
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int mx = (e.getX());
-		int my = (e.getY());
+		mouseDown = e.getPoint();
 	}
 
 	@Override
@@ -26,6 +24,10 @@ public class MouseInput extends MouseAdapter {
 
 	public Point getPoint() {
 		return mousePos;
+	}
+	
+	public Point getDownPoint() {
+		return mouseDown;
 	}
 
 }

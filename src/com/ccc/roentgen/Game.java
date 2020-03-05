@@ -37,14 +37,13 @@ public class Game extends Canvas implements Runnable {
 		size = new Dimension(1000, 600);
 		levelSize = new Dimension(1500, 1000);
 		new Window("Roentgen", size, this);
-		start();
 
 		handler = new Handler();
 		gui = new GUIHandler();
 		gameInstance = this;
 
-		mmi = new MouseMotionInput(handler);
-		mi = new MouseInput(handler);
+		mmi = new MouseMotionInput();
+		mi = new MouseInput();
 		ki = new KeyInput();
 
 		camera = new Camera(0, 0);
@@ -55,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 
 		BufferedImageLoader.loadSpriteSheet("spritesheet.png");
 		
+		start();
 
 		createWorld();
 	}
@@ -164,6 +164,7 @@ public class Game extends Canvas implements Runnable {
 
 	// Runs before first tick method
 	public void createWorld() {
+		handler.addObject(new Base());
 		handler.addObject(new Player(50, 50));
 	}
 
