@@ -47,15 +47,15 @@ public class Player extends GameObject {
 		}
 
 		count++;
-		if(count > 100) {
+		if(count > 50) {
 			count = 0;	
-		} else if(count > 80) {
-			as = 1;
-		} else if(count > 60) {
-			as = 2;
 		} else if(count > 40) {
 			as = 1;
+		} else if(count > 30) {
+			as = 2;
 		} else if(count > 20) {
+			as = 1;
+		} else if(count > 10) {
 			as = 0;
 		}
 	}
