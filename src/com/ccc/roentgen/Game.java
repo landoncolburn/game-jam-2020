@@ -171,6 +171,7 @@ public class Game extends Canvas implements Runnable {
 	public void createWorld() {
 		handler.addObject(new Base());
 		handler.addObject(new Player(50, 50));
+		handler.addObject(new Enemy(100, 100));
 	}
 
 	public static void main(String[] args) {
