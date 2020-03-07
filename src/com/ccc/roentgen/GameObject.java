@@ -61,7 +61,7 @@ public abstract class GameObject {
 		this.id = id;
 	}
 
-	public Rectangle getBounds() {
+	public Rectangle getBounds() {//returns the bounds of a rectangle object
 		return new Rectangle(getX(), getY(), getW(), getH());
 	}
 }
