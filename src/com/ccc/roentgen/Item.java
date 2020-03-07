@@ -4,7 +4,10 @@ public class Item {
 
 	private ItemID ID;
 	
-	public Item() {}; // placeholder
+	public Item() {//Item constructor
+		
+		
+	};
 	
 	public ItemID getID() {
 		return ID;

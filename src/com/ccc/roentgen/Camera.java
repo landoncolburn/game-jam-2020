@@ -5,7 +5,7 @@ public class Camera {
 	private float x;
 	private float y;
 
-	public Camera(float x, float y) {
+	public Camera(float x, float y) {//Camera Constructor
 		this.x = x;
 		this.y = y;
 	}

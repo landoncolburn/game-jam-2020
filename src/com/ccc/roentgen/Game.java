@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable {
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
 			new Rectangle(0, 0, 64, 64));
 
-	public Game() {
+	public Game() {//Game Constructor
 		
 		AudioManager.initializeAudioManager();
 		

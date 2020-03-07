@@ -6,7 +6,10 @@ public class Inventory {
 
 	ArrayList<Item> list = new ArrayList<Item>();
 	
-	public Inventory() {};
+	public Inventory() {//Inventory constructor
+		
+		
+	};
 	
 	public void add(Item i) {
 		list.add(i);

@@ -9,7 +9,7 @@ public class Base extends GameObject {
 	
 	private int baseHealth = 100;
 
-	public Base() {
+	public Base() {//Base constructor
 		super(-256, -256, 512, 512, false, ID.BASE);
 		sprite = BufferedImageLoader.loadImage("base1.png");
 	}

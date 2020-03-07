@@ -8,7 +8,7 @@ public abstract class GameObject {
 	protected ID id;
 	public boolean solid;
 
-	public GameObject(int x, int y, int w, int h, boolean s, ID i) {
+	public GameObject(int x, int y, int w, int h, boolean s, ID i) {//GameObject constructor
 		this.x = x;
 		this.y = y;
 		this.w = w;

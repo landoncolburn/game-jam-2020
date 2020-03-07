@@ -7,7 +7,7 @@ public class GUIHandler {
 
 	private ArrayList<GameObject> elements;
 
-	public GUIHandler() {
+	public GUIHandler() {//GUIHandler constructor
 		elements = new ArrayList<GameObject>();
 	}
 

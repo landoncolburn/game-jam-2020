@@ -7,7 +7,7 @@ public class Handler {
 
 	public ArrayList<GameObject> gameObjects;
 
-	public Handler() {
+	public Handler() {//Handler constructor
 		gameObjects = new ArrayList<GameObject>();
 	}
 

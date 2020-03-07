@@ -20,7 +20,7 @@ public class Player extends GameObject {
 	int velX = 0;
 	int velY = 0;
 
-	public Player(int x, int y) {
+	public Player(int x, int y) {//Player constructor
 		super(x, y, 64, 96, true, ID.PLAYER);
 		animations[0][0] = BufferedImageLoader.getSprite(64, 0, 32, 48);
 		animations[0][1] = BufferedImageLoader.getSprite(96, 0, 32, 48);
