@@ -30,4 +30,14 @@ public class AudioManager {
 		songManager.stopSongs();
 	}
 	
+	/**
+	 * Clears queue, sets queue to arguments, plays first argument immediately
+	 * 
+	 * @param 	titles 	the titles of the songs for the new queue
+	 */
+	public static void playSongImmediately(String... titles) {
+		songManager.stopSongs();
+		songManager.addToQueue(titles);
+	}
+	
 }
