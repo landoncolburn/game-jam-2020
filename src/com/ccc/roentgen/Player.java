@@ -10,6 +10,7 @@ public class Player extends GameObject {
 	int as = 0;
 	int d = 0;
 	int count = 0;
+	int centerX, centerY;
 
 	BufferedImage[][] animations = new BufferedImage[3][3];
 	BufferedImage smoke = BufferedImageLoader.loadImage("smoke.png");
@@ -39,6 +40,8 @@ public class Player extends GameObject {
 
 		lastX = x;
 		lastY = y;
+		centerX = x + w/2;
+		centerY = y + h;
 		if((x+velX-32>-Game.gameInstance.levelSize.width/2) && (x+velX+32<Game.gameInstance.levelSize.width/2)) {
 			x+=velX;
 		}
