@@ -9,6 +9,8 @@ import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.image.BufferStrategy;
 
+import com.ccc.roentgen.audio.AudioManager;
+
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 42l;
@@ -34,6 +36,9 @@ public class Game extends Canvas implements Runnable {
 			new Rectangle(0, 0, 64, 64));
 
 	public Game() {
+		
+		AudioManager.initializeAudioManager();
+		
 		size = new Dimension(1000, 600);
 		levelSize = new Dimension(1500, 1000);
 		new Window("Roentgen", size, this);
