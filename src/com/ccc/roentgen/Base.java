@@ -11,7 +11,7 @@ public class Base extends GameObject {
 
 	public Base() {
 		super(-256, -256, 512, 512, false, ID.BASE);
-		sprite = BufferedImageLoader.loadImage("base.png");
+		sprite = BufferedImageLoader.loadImage("base1.png");
 	}
 
 	@Override
