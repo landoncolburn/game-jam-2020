@@ -8,6 +8,7 @@ public class Base extends GameObject {
 	BufferedImage sprite;
 	
 	private int baseHealth = 100;
+	private int timer = 0;
 
 	public Base() {//Base constructor
 		super(-256, -256, 512, 512, false, ID.BASE);
@@ -16,20 +17,24 @@ public class Base extends GameObject {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-
+		int count = 0;
+		timer++;
+		for(GameObject go : Game.gameInstance.handler.gameObjects) {
+			if(go.getID() == ID.ENEMY) {
+				count++;
+			}
+		}
+		if(timer>120) {
+			timer = 0;
+			baseHealth -= count;
+			System.out.println(baseHealth);
+		}
+		
 	}
 
 	@Override
 	public void render(Graphics g, double p) {
 		g.drawImage(sprite, x, y, w, h, null);
 	}
-
-	public int getBaseHealth() {
-		return baseHealth;
-	}
 	
-	public void setBaseHealth(int baseHealth) {
-		this.baseHealth = baseHealth;
-	}
 }
