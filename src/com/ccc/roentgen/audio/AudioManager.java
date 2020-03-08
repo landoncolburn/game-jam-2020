@@ -40,4 +40,14 @@ public class AudioManager {
 		songManager.addToQueue(titles);
 	}
 	
+	/**
+	 * Immediately plays sounds effects.
+	 * 
+	 * @param 	sounds 	the titles of the sound effects to play
+	 */
+	public static void playEffects(String... sounds) {
+		for(String s : sounds) {
+			new SoundEffect(s);
+		}
+	}
 }
