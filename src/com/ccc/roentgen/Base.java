@@ -1,6 +1,7 @@
 package com.ccc.roentgen;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Base extends GameObject {
@@ -21,15 +22,21 @@ public class Base extends GameObject {
 		timer++;
 		for(GameObject go : Game.gameInstance.handler.gameObjects) {
 			if(go.getID() == ID.ENEMY) {
-				count++;
+				if(getBounds().contains(go.getX(), go.getY())) {
+					count++;
+				}
 			}
 		}
 		if(timer>120) {
 			timer = 0;
-			baseHealth -= count;
-			System.out.println(baseHealth);
+			baseHealth -= count*2;
+			Game.gameInstance.healthBar.setPer(baseHealth/100.0);
 		}
 		
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, w, h);
 	}
 
 	@Override

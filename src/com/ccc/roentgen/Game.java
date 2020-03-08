@@ -31,6 +31,8 @@ public class Game extends Canvas implements Runnable {
 	public MouseInput mi;
 	public KeyInput ki;
 	public Camera camera;
+	
+	public HealthBar healthBar;
 
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
 			new Rectangle(0, 0, 64, 64));
@@ -146,9 +148,10 @@ public class Game extends Canvas implements Runnable {
 		g2d.setPaint(paint);
 		g.fillRect(-levelSize.width/2, -levelSize.height/2, levelSize.width, levelSize.height);
 		handler.render(g, lag / MS_PER_UPDATE);
-		gui.render(g, lag / MS_PER_UPDATE);
 
 		g2d.translate(camera.getX(), camera.getY());
+		
+		gui.render(g, lag / MS_PER_UPDATE);
 
 		//////////////////////////////////
 		g.dispose();
@@ -172,6 +175,8 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new Base());
 		handler.addObject(new Player(50, 50));
 		handler.addObject(new Enemy(100, 100));
+		healthBar = new HealthBar(size.width);
+		gui.addObject(healthBar);
 	}
 
 	public static void main(String[] args) {
