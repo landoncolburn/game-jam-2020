@@ -21,20 +21,49 @@ public class Enemy extends GameObject {
 	public void tick() {
 		x+=velX;
 		y+=velY;
-		if(Math.abs(x-target.getX())<5) {
-			velX = 0;
-		} else if(x<target.getX()) {
-			velX = 1;
-		} else if(x>target.getX()) {
-			velX = -1;
+		if(!(pushingX || pushingY)) {
+			if(Math.abs(getCX()-target.getX())<5) {
+				velX = 0;
+			} else if(getCX()<target.getX()) {
+				velX = 1;
+			} else if(getCX()>target.getX()) {
+				velX = -1;
+			}
+			
+			if(Math.abs(getCY()-target.getY())<5) {
+				velY = 0;
+			} else if(getCY()<target.getY()) {
+				velY = 1;
+			} else if(getCY()>target.getY()) {
+				velY = -1;
+			}
+		} else {
+			velX = pushX;
+			velY = pushY;
+			if(pushX == 0) {
+				pushingX = false;
+			} else if(pushX > 0){
+				pushX--;
+			} else if(pushX < 0){
+				pushX++;
+			}
+			if(pushY == 0) {
+				pushingY = false;
+			} else if(pushY > 0){
+				pushY--;
+			} else if(pushY < 0){
+				pushY++;
+			}
 		}
-		
-		if(Math.abs(y-target.getY())<5) {
-			velY = 0;
-		} else if(y<target.getY()) {
-			velY = 1;
-		} else if(y>target.getY()) {
-			velY = -1;
+	}
+	
+	public void push(boolean vert, int push) {
+		if(vert) {
+			pushY = push;
+			pushingY = true;
+		} else {
+			pushX = push;
+			pushingX = true;
 		}
 	}
 

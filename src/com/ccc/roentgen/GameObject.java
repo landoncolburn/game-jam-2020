@@ -8,6 +8,11 @@ public abstract class GameObject {
 	protected ID id;
 	public boolean solid;
 
+	public int pushX = 0;
+	public int pushY = 0;
+	public boolean pushingX = true;
+	public boolean pushingY = true;
+
 	public GameObject(int x, int y, int w, int h, boolean s, ID i) {//GameObject constructor
 		this.x = x;
 		this.y = y;
@@ -48,6 +53,14 @@ public abstract class GameObject {
 	public int getH() {
 		return h;
 	}
+	
+	public int getCX() {
+		return x+w/2;
+	}
+	
+	public int getCY() {
+		return y+h/2;
+	}
 
 	public void setH(int h) {
 		this.h = h;
@@ -59,6 +72,16 @@ public abstract class GameObject {
 
 	public void setID(ID id) {
 		this.id = id;
+	}
+	
+	public void push(boolean vert, int push) {
+		if(vert) {
+			pushY = push;
+			pushingY = true;
+		} else {
+			pushX = push;
+			pushingX = true;
+		}
 	}
 
 	public Rectangle getBounds() {//returns the bounds of a rectangle object

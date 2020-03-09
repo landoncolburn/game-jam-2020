@@ -2,6 +2,7 @@ package com.ccc.roentgen;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 public class Player extends GameObject {
@@ -10,7 +11,8 @@ public class Player extends GameObject {
 	int as = 0;
 	int d = 0;
 	int count = 0;
-	int centerX, centerY;
+	private int range = 100;
+	private int atckCool = 60;
 
 	BufferedImage[][] animations = new BufferedImage[3][3];
 	BufferedImage smoke = BufferedImageLoader.loadImage("smoke.png");
@@ -40,13 +42,18 @@ public class Player extends GameObject {
 
 		lastX = x;
 		lastY = y;
-		centerX = x + w/2;
-		centerY = y + h;
 		if((x+velX-32>-Game.gameInstance.levelSize.width/2) && (x+velX+32<Game.gameInstance.levelSize.width/2)) {
 			x+=velX;
 		}
 		if((y+velY-32>-Game.gameInstance.levelSize.height/2) && (y+velY+64<Game.gameInstance.levelSize.height/2)) {
 			y+=velY;
+		}
+		
+		if(atckCool>0) {
+			atckCool--;
+		}
+		if(atckCool<40) {
+			attacking  = false;
 		}
 
 		count++;
@@ -66,7 +73,6 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g, double p) {
 		g.setColor(Color.WHITE);
-		g.drawString("x: " + x + " y: " + y, x-40, y-40);
 		g.drawImage(animations[d][as], (int) ((x - lastX) * p + lastX - w / 2), (int) ((y - lastY) * p + lastY - h / 2),
 				w, h, null);
 		if(attacking) {
@@ -97,10 +103,28 @@ public class Player extends GameObject {
 			d = 0;
 		}
 		
-		if (KeyInput.get(4) == Key.DOWN) {
-			attacking = true;
-		} else {
-			attacking = false;
+		if (KeyInput.get(4) == Key.DOWN && atckCool <= 0) {
+			attack();
+		}
+	}
+	
+	public void attack() {
+		atckCool = 60;
+		attacking = true;
+		Ellipse2D reach = new Ellipse2D.Double(x-range/2, y-range/2, range, range);
+		for(GameObject go : Game.gameInstance.handler.getByID(ID.ENEMY)){
+			if(reach.intersects(go.getBounds())) {
+				if(go.getCX()>x) { //Enemy Right of Player
+					go.push(false, 15);
+				} else { //Enemy Left of Player
+					go.push(false, -15);
+				}
+				if(go.getCY()>y) { //Enemy Below Player
+					go.push(true, 15);
+				} else { //Enemy Above Player
+					go.push(true, -15);
+				}
+			}
 		}
 	}
 }
