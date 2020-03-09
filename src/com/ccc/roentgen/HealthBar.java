@@ -1,14 +1,17 @@
 package com.ccc.roentgen;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public class HealthBar extends GameObject {
 	
 	private double percent = 1;
+	private BufferedImage health,bar;
 
 	public HealthBar(int x) {
-		super(x/5, 10, 3*(x/5), 40, false, ID.GUI);
+		super(x/5, 10, 512, 32, false, ID.GUI);
+		health = BufferedImageLoader.loadImage("health_bar_inside.png");
+		bar = BufferedImageLoader.loadImage("health_bar.png");
 	}
 
 	@Override
@@ -23,10 +26,8 @@ public class HealthBar extends GameObject {
 
 	@Override
 	public void render(Graphics g, double p) {
-		g.setColor(Color.RED);
-		g.fillRect(x, y, (int)(w*percent), h);
-		g.setColor(Color.RED);
-		g.drawRect(x, y, w, h);
+		g.drawImage(health, x, y, (int)(w*percent), h, null);
+		g.drawImage(bar, x, y, w, h, null);
 
 	}
 

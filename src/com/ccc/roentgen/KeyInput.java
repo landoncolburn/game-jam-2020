@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter {
 
-	public static Key keys[] = { Key.UP, Key.UP, Key.UP, Key.UP, Key.UP };
+	public static Key keys[] = { Key.UP, Key.UP, Key.UP, Key.UP, Key.UP, Key.UP };
 
 	public KeyInput() {
 
@@ -25,6 +25,8 @@ public class KeyInput extends KeyAdapter {
 			set(3, Key.DOWN);
 		if (key == KeyEvent.VK_SPACE)
 			set(4, Key.DOWN);
+		if (key == KeyEvent.VK_SHIFT)
+			set(5, Key.DOWN);
 	}
 
 	@Override
@@ -41,6 +43,8 @@ public class KeyInput extends KeyAdapter {
 			set(3, Key.UP);
 		if (key == KeyEvent.VK_SPACE)
 			set(4, Key.UP);
+		if (key == KeyEvent.VK_SHIFT)
+			set(5, Key.UP);
 	}
 
 	public static void set(int i, Key k) {

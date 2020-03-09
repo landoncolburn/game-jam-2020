@@ -13,6 +13,8 @@ public class Player extends GameObject {
 	int count = 0;
 	private int range = 100;
 	private int atckCool = 60;
+	private int dashCool = 40;
+	private int dr = 0;
 
 	BufferedImage[][] animations = new BufferedImage[3][3];
 	BufferedImage smoke = BufferedImageLoader.loadImage("smoke.png");
@@ -54,6 +56,10 @@ public class Player extends GameObject {
 		}
 		if(atckCool<40) {
 			attacking  = false;
+		}
+		
+		if(dashCool>0) {
+			dashCool--;
 		}
 
 		count++;
@@ -105,6 +111,15 @@ public class Player extends GameObject {
 		
 		if (KeyInput.get(4) == Key.DOWN && atckCool <= 0) {
 			attack();
+		}
+		
+		if(KeyInput.get(5) == Key.DOWN && dashCool <= 0) {
+			velX *= 3;
+			velY *= 3;
+			if(dr++>=15) {
+				dr = 0;
+				dashCool = 40;
+			}
 		}
 	}
 	

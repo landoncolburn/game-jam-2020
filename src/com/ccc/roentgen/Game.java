@@ -175,6 +175,7 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new Base());
 		handler.addObject(new Player(50, 50));
 		handler.addObject(new Enemy(100, 100));
+		handler.addObject(new Enemy(-100, -100));
 		healthBar = new HealthBar(size.width);
 		gui.addObject(healthBar);
 	}
