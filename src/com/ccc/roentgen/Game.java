@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
 	public Camera camera;
 	
 	public HealthBar healthBar;
+	public boolean beingDamaged = false;
 
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
 			new Rectangle(0, 0, 64, 64));
@@ -59,7 +60,8 @@ public class Game extends Canvas implements Runnable {
 		this.addKeyListener(ki);
 		this.addMouseMotionListener(mmi);
 
-		BufferedImageLoader.loadSpriteSheet("spritesheet.png");
+		BufferedImageLoader.loadSpriteSheet(0, "spritesheet.png");
+		BufferedImageLoader.loadSpriteSheet(1, "enemy.png");
 		
 		start();
 
@@ -176,6 +178,8 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new Player(50, 50));
 		handler.addObject(new Enemy(100, 100));
 		handler.addObject(new Enemy(-100, -100));
+		handler.addObject(new Enemy(100, -100));
+		handler.addObject(new Enemy(-100, 100));
 		healthBar = new HealthBar(size.width);
 		gui.addObject(healthBar);
 	}

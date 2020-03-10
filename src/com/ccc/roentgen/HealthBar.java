@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class HealthBar extends GameObject {
 	
-	private double percent = 1;
+	private int hp = 100;
 	private BufferedImage health,bar;
 
 	public HealthBar(int x) {
@@ -20,13 +20,17 @@ public class HealthBar extends GameObject {
 
 	}
 	
-	public void setPer(double p) {
-		percent = p;
+	public void removeHP(int i) {
+		if(hp>0) {
+			hp -= i;
+		}
 	}
 
 	@Override
 	public void render(Graphics g, double p) {
-		g.drawImage(health, x, y, (int)(w*percent), h, null);
+		if (hp>0) {
+			g.drawImage(health, x + 2, y, (int) (w * hp / 100.0) - 2, h, null);
+		}
 		g.drawImage(bar, x, y, w, h, null);
 
 	}

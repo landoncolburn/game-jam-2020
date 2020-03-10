@@ -26,15 +26,15 @@ public class Player extends GameObject {
 
 	public Player(int x, int y) {//Player constructor
 		super(x, y, 64, 96, true, ID.PLAYER);
-		animations[0][0] = BufferedImageLoader.getSprite(64, 0, 32, 48);
-		animations[0][1] = BufferedImageLoader.getSprite(96, 0, 32, 48);
-		animations[0][2] = BufferedImageLoader.getSprite(128, 0, 32, 48);
-		animations[1][0] = BufferedImageLoader.getSprite(160, 0, 32, 48);
-		animations[1][1] = BufferedImageLoader.getSprite(192, 0, 32, 48);
-		animations[1][2] = BufferedImageLoader.getSprite(224, 0, 32, 48);
-		animations[2][0] = BufferedImageLoader.getSprite(256, 0, 32, 48);
-		animations[2][1] = BufferedImageLoader.getSprite(288, 0, 32, 48);
-		animations[2][2] = BufferedImageLoader.getSprite(320, 0, 32, 48);
+		animations[0][0] = BufferedImageLoader.getSprite(0, 64, 0, 32, 48);
+		animations[0][1] = BufferedImageLoader.getSprite(0, 96, 0, 32, 48);
+		animations[0][2] = BufferedImageLoader.getSprite(0, 128, 0, 32, 48);
+		animations[1][0] = BufferedImageLoader.getSprite(0, 160, 0, 32, 48);
+		animations[1][1] = BufferedImageLoader.getSprite(0, 192, 0, 32, 48);
+		animations[1][2] = BufferedImageLoader.getSprite(0, 224, 0, 32, 48);
+		animations[2][0] = BufferedImageLoader.getSprite(0, 256, 0, 32, 48);
+		animations[2][1] = BufferedImageLoader.getSprite(0, 288, 0, 32, 48);
+		animations[2][2] = BufferedImageLoader.getSprite(0, 320, 0, 32, 48);
 	}
 
 	@Override
@@ -129,15 +129,17 @@ public class Player extends GameObject {
 		Ellipse2D reach = new Ellipse2D.Double(x-range/2, y-range/2, range, range);
 		for(GameObject go : Game.gameInstance.handler.getByID(ID.ENEMY)){
 			if(reach.intersects(go.getBounds())) {
+				go.damage();
+				int random = (int)(Math.random()*3)+13;
 				if(go.getCX()>x) { //Enemy Right of Player
-					go.push(false, 15);
+					go.push(false, random);
 				} else { //Enemy Left of Player
-					go.push(false, -15);
+					go.push(false, -random);
 				}
 				if(go.getCY()>y) { //Enemy Below Player
-					go.push(true, 15);
+					go.push(true, random);
 				} else { //Enemy Above Player
-					go.push(true, -15);
+					go.push(true, -random);
 				}
 			}
 		}

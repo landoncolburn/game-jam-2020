@@ -74,6 +74,10 @@ public abstract class GameObject {
 		this.id = id;
 	}
 	
+	public void damage() {
+		//Purposely empty method stub
+	}
+	
 	public void push(boolean vert, int push) {
 		if(vert) {
 			pushY = push;

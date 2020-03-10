@@ -8,7 +8,6 @@ public class Base extends GameObject {
 	
 	BufferedImage sprite;
 	
-	private int baseHealth = 100;
 	private int timer = 0;
 
 	public Base() {//Base constructor
@@ -29,8 +28,11 @@ public class Base extends GameObject {
 		}
 		if(timer>120) {
 			timer = 0;
-			baseHealth -= count*2;
-			Game.gameInstance.healthBar.setPer(baseHealth/100.0);
+			Game.gameInstance.healthBar.removeHP(count*3);
+			System.out.println(count);
+			if(Game.gameInstance.beingDamaged) {
+				Game.gameInstance.healthBar.removeHP(5);
+			}
 		}
 		
 	}
