@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
 	public Camera camera;
 	
 	public HealthBar healthBar;
+	public Player player;
 	public boolean beingDamaged = false;
 
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
@@ -175,7 +176,8 @@ public class Game extends Canvas implements Runnable {
 	// Runs before first tick method
 	public void createWorld() {
 		handler.addObject(new Base());
-		handler.addObject(new Player(50, 50));
+		player = new Player(50, 50);
+		handler.addObject(player);
 		handler.addObject(new Enemy(100, 100));
 		handler.addObject(new Enemy(-100, -100));
 		handler.addObject(new Enemy(100, -100));

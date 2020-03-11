@@ -19,19 +19,19 @@ public class Inventory {
 		list.remove(index);
 	}
 	
-	public int search(ItemID i) {
+	public int search(ItemType i) {
 		for (int j = 0; j < list.size(); j++) {
-			if (list.get(j).getID() == i) {
+			if (list.get(j).getType() == i) {
 				return j;
 			}
 		}
 		return -1;
 	}
 	
-	public int count(ItemID i) {
+	public int count(ItemType i) {
 		int count = 0;
 		for (Item item: list) {
-			if (item.getID() == i) {
+			if (item.getType() == i) {
 				count++;
 			}
 		}

@@ -1,5 +1,5 @@
 package com.ccc.roentgen;
 
 public enum ID {
-	GUI, PLAYER, BASE, ENEMY;
+	GUI, PLAYER, BASE, ENEMY, ITEM;
 }

@@ -46,6 +46,9 @@ public class Enemy extends GameObject {
 			d = 3;
 			if(deadCount++>10) {
 				Game.gameInstance.handler.removeObject(this);
+				if((Math.random()*10)>6) {
+					Game.gameInstance.handler.addObject(new Item(getCX(), getCY(), ItemType.HEART));
+				}
 			}
 		}
 		boolean closeX = false,closeY = false;

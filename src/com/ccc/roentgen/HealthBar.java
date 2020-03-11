@@ -25,6 +25,14 @@ public class HealthBar extends GameObject {
 			hp -= i;
 		}
 	}
+	
+	public void addHP(int i) {
+		if(hp+i<100) {
+			hp += i;
+		} else {
+			hp = 100;
+		}
+	}
 
 	@Override
 	public void render(Graphics g, double p) {

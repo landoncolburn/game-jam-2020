@@ -29,7 +29,6 @@ public class Base extends GameObject {
 		if(timer>120) {
 			timer = 0;
 			Game.gameInstance.healthBar.removeHP(count*3);
-			System.out.println(count);
 			if(Game.gameInstance.beingDamaged) {
 				Game.gameInstance.healthBar.removeHP(5);
 			}
