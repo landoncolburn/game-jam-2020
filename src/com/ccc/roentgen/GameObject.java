@@ -2,16 +2,23 @@ package com.ccc.roentgen;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
 	protected int x, y, w, h;
 	protected ID id;
 	public boolean solid;
+	
+	protected int hp = 10;
+	protected int maxHP = 10;
 
 	public int pushX = 0;
 	public int pushY = 0;
 	public boolean pushingX = true;
 	public boolean pushingY = true;
+	
+	protected BufferedImage healthBar = BufferedImageLoader.loadImage("enemy_health_bar.png");
+	protected BufferedImage healthBarInside = BufferedImageLoader.loadImage("enemy_health_bar_inside.png");
 
 	public GameObject(int x, int y, int w, int h, boolean s, ID i) {//GameObject constructor
 		this.x = x;
@@ -75,7 +82,9 @@ public abstract class GameObject {
 	}
 	
 	public void damage() {
-		//Purposely empty method stub
+		if(hp>0) {
+			hp--;
+		}
 	}
 	
 	public void push(boolean vert, int push) {

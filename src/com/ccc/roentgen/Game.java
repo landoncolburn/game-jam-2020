@@ -63,7 +63,7 @@ public class Game extends Canvas implements Runnable {
 
 		BufferedImageLoader.loadSpriteSheet(0, "spritesheet.png");
 		BufferedImageLoader.loadSpriteSheet(1, "enemy.png");
-		BufferedImageLoader.loadSpriteSheet(2, "items-temp.png");
+		BufferedImageLoader.loadSpriteSheet(2, "itemsheet.png");
 		
 		start();
 

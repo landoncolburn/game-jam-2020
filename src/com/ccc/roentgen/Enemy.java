@@ -17,7 +17,6 @@ public class Enemy extends GameObject {
 	private int stunFrames = 0;
 	
 	private BufferedImage[] sprite = new BufferedImage[4];
-	private int hp = 10;
 
 	public Enemy(int x, int y) {
 		super(x, y, 64, 96, true, ID.ENEMY);
@@ -144,6 +143,8 @@ public class Enemy extends GameObject {
 	@Override
 	public void render(Graphics g, double p) {
 		g.drawImage(sprite[d], x, y, w, h, null);
+		g.drawImage(healthBarInside, x+18, y+2, (28*hp/maxHP), 4, null);
+		g.drawImage(healthBar, x+16, y, 32, 8, null);
 	}
 
 }

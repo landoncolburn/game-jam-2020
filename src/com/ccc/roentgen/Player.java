@@ -1,6 +1,5 @@
 package com.ccc.roentgen;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -81,7 +80,8 @@ public class Player extends GameObject {
 
 	@Override
 	public void render(Graphics g, double p) {
-		g.setColor(Color.WHITE);
+		g.drawImage(healthBarInside, x-14, y-44, (28*hp/maxHP), 4, null);
+		g.drawImage(healthBar, x-16, y-46, 32, 8, null);
 		if(attacking) {
 			g.drawImage(animations[3][as], (int) ((x - lastX) * p + lastX - w / 2), (int) ((y - lastY) * p + lastY - h / 2),
 					w, h, null);
