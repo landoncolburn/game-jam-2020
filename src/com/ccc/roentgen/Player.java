@@ -16,8 +16,8 @@ public class Player extends GameObject {
 	private int dashCool = 40;
 	private int dr = 0;
 
-	BufferedImage[][] animations = new BufferedImage[3][3];
-	BufferedImage smoke = BufferedImageLoader.loadImage("smoke.png");
+	BufferedImage[][] animations = new BufferedImage[4][3];
+	BufferedImage smoke = BufferedImageLoader.loadImage("strike.png");
 	
 	boolean attacking = false;
 
@@ -26,15 +26,18 @@ public class Player extends GameObject {
 
 	public Player(int x, int y) {//Player constructor
 		super(x, y, 64, 96, true, ID.PLAYER);
-		animations[0][0] = BufferedImageLoader.getSprite(0, 64, 0, 32, 48);
-		animations[0][1] = BufferedImageLoader.getSprite(0, 96, 0, 32, 48);
-		animations[0][2] = BufferedImageLoader.getSprite(0, 128, 0, 32, 48);
-		animations[1][0] = BufferedImageLoader.getSprite(0, 160, 0, 32, 48);
-		animations[1][1] = BufferedImageLoader.getSprite(0, 192, 0, 32, 48);
-		animations[1][2] = BufferedImageLoader.getSprite(0, 224, 0, 32, 48);
-		animations[2][0] = BufferedImageLoader.getSprite(0, 256, 0, 32, 48);
-		animations[2][1] = BufferedImageLoader.getSprite(0, 288, 0, 32, 48);
-		animations[2][2] = BufferedImageLoader.getSprite(0, 320, 0, 32, 48);
+		animations[0][0] = BufferedImageLoader.getSprite(0, 96, 0, 32, 48);
+		animations[0][1] = BufferedImageLoader.getSprite(0, 128, 0, 32, 48);
+		animations[0][2] = BufferedImageLoader.getSprite(0, 160, 0, 32, 48);
+		animations[1][0] = BufferedImageLoader.getSprite(0, 192, 0, 32, 48);
+		animations[1][1] = BufferedImageLoader.getSprite(0, 224, 0, 32, 48);
+		animations[1][2] = BufferedImageLoader.getSprite(0, 256, 0, 32, 48);
+		animations[2][0] = BufferedImageLoader.getSprite(0, 288, 0, 32, 48);
+		animations[2][1] = BufferedImageLoader.getSprite(0, 320, 0, 32, 48);
+		animations[2][2] = BufferedImageLoader.getSprite(0, 352, 0, 32, 48);
+		animations[3][0] = BufferedImageLoader.getSprite(0, 64, 0, 32, 48);
+		animations[3][1] = BufferedImageLoader.getSprite(0, 32, 0, 32, 48);
+		animations[3][2] = BufferedImageLoader.getSprite(0, 0, 0, 32, 48);
 	}
 
 	@Override
@@ -79,10 +82,13 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics g, double p) {
 		g.setColor(Color.WHITE);
-		g.drawImage(animations[d][as], (int) ((x - lastX) * p + lastX - w / 2), (int) ((y - lastY) * p + lastY - h / 2),
-				w, h, null);
 		if(attacking) {
+			g.drawImage(animations[3][as], (int) ((x - lastX) * p + lastX - w / 2), (int) ((y - lastY) * p + lastY - h / 2),
+					w, h, null);
 			g.drawImage(smoke, x-32, y-32, 64, 64, null);
+		} else {
+			g.drawImage(animations[d][as], (int) ((x - lastX) * p + lastX - w / 2), (int) ((y - lastY) * p + lastY - h / 2),
+					w, h, null);
 		}
 	}
 
