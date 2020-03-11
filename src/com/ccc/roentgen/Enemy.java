@@ -17,6 +17,12 @@ public class Enemy extends GameObject {
 	private int stunFrames = 0;
 	
 	private BufferedImage[] sprite = new BufferedImage[4];
+	
+	private Drop[] drops = {
+		new Drop(0.80, ItemType.COIN),
+		new Drop(0.50, ItemType.HEART),
+		new Drop(0.20, ItemType.BAT),
+	};
 
 	public Enemy(int x, int y) {
 		super(x, y, 64, 96, true, ID.ENEMY);
@@ -45,9 +51,7 @@ public class Enemy extends GameObject {
 			d = 3;
 			if(deadCount++>10) {
 				Game.gameInstance.handler.removeObject(this);
-				if((Math.random()*10)>6) {
-					Game.gameInstance.handler.addObject(new Item(getCX(), getCY(), ItemType.HEART));
-				}
+				drop();
 			}
 		}
 		boolean closeX = false,closeY = false;
@@ -128,6 +132,15 @@ public class Enemy extends GameObject {
 	
 	public void kill() {		
 		dead = true;
+	}
+	
+	public void drop() {
+		for(Drop dr : drops) {
+			if(Math.random()<dr.getProbability()) {
+				Game.gameInstance.handler.addObject(
+						new Item(getCX()+((int)(Math.random()*30)-15), getCY()+((int)(Math.random()*30)-15), dr.getType()));
+			}
+		}
 	}
 	
 	public void push(boolean vert, int push) {

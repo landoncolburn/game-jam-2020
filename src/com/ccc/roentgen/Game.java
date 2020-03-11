@@ -39,6 +39,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public HealthBar healthBar;
 	public Player player;
+	public Inventory inventory;
 	public boolean beingDamaged = false;
 
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
@@ -192,6 +193,7 @@ public class Game extends Canvas implements Runnable {
 	public void createWorld() {
 		handler.addObject(new Base());
 		player = new Player(50, 50);
+		inventory = new Inventory();
 		handler.addObject(player);
 		for(int i = 0; i < numOfZoms; i++) {
 			enemyQueue.add(new Enemy((int)(Math.random()*2000)-1000, (int)(Math.random()*2000)-1000));

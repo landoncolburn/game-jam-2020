@@ -13,7 +13,7 @@ public class Item extends GameObject{
 		super(x, y, 32, 32, false, ID.ITEM);
 		this.type = type;
 		
-		switch(type) {
+		switch(this.type) {
 		case BAT:
 			sprite = BufferedImageLoader.getSprite(2, 0, 0, 32, 32);
 			break;
@@ -21,6 +21,9 @@ public class Item extends GameObject{
 			sprite = BufferedImageLoader.getSprite(2, 32, 0, 32, 32);
 			break;
 		case TURRET:
+			break;
+		case COIN:
+			sprite = BufferedImageLoader.getSprite(2, 64, 0, 32, 32);
 			break;
 		}
 		
@@ -38,7 +41,7 @@ public class Item extends GameObject{
 		if(count>50 && Math.abs(difX)<10) {
 			if(Math.abs(difY)<10) {
 				Game.gameInstance.handler.removeObject(this);
-				Game.gameInstance.healthBar.addHP(20);
+				action();
 			}
 		}
 		if(Math.abs(difX)<100) {
@@ -58,6 +61,26 @@ public class Item extends GameObject{
 		if(count > 600) {
 			Game.gameInstance.handler.removeObject(this);
 		}
+	}
+	
+	public void action() {
+		switch(type) {
+		case HEART:
+			Game.gameInstance.healthBar.addHP(20);
+			break;
+		case COIN:
+			Game.gameInstance.inventory.changeCoins(1);
+			break;
+		default:
+			Game.gameInstance.inventory.add(this);
+			break;
+		}
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Item: " + getType();
 	}
 
 	@Override
