@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.image.BufferStrategy;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import com.ccc.roentgen.audio.AudioManager;
 
@@ -26,6 +28,9 @@ public class Game extends Canvas implements Runnable {
 
 	public Dimension size;
 	public final Dimension levelSize;
+	private int numOfZoms = 6;
+	private Queue<Enemy> enemyQueue = new LinkedList<Enemy>();
+	private int spawnCount;
 	
 	public MouseMotionInput mmi;
 	public MouseInput mi;
@@ -169,6 +174,15 @@ public class Game extends Canvas implements Runnable {
 				camera.tick(handler.gameObjects.get(i));
 			}
 		}
+		
+		if(enemyQueue.size() == 0) {
+			
+		} else if(spawnCount<0) {
+			spawnCount = (int)(Math.random()*1200)+600;
+			handler.addObject(enemyQueue.poll());
+		} else {
+			spawnCount--;
+		}
 
 		handler.tick();
 		gui.tick();
@@ -179,10 +193,9 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new Base());
 		player = new Player(50, 50);
 		handler.addObject(player);
-		handler.addObject(new Enemy(100, 100));
-		handler.addObject(new Enemy(-100, -100));
-		handler.addObject(new Enemy(100, -100));
-		handler.addObject(new Enemy(-100, 100));
+		for(int i = 0; i < numOfZoms; i++) {
+			enemyQueue.add(new Enemy((int)(Math.random()*2000)-1000, (int)(Math.random()*2000)-1000));
+		}
 		healthBar = new HealthBar(size.width);
 		gui.addObject(healthBar);
 	}
