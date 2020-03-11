@@ -9,10 +9,21 @@ public class Item extends GameObject{
 	private BufferedImage sprite;
 	private int count = 0;
 	
-	public Item(int x, int y, ItemType type) {//Item constructor
+	public Item(int x, int y, ItemType type) { //Item constructor
 		super(x, y, 32, 32, false, ID.ITEM);
 		this.type = type;
-		sprite = BufferedImageLoader.loadImage("itemsheet.png");
+		
+		switch(type) {
+		case BAT:
+			sprite = BufferedImageLoader.getSprite(2, 0, 0, 32, 32);
+			break;
+		case HEART:
+			sprite = BufferedImageLoader.getSprite(2, 32, 0, 32, 32);
+			break;
+		case TURRET:
+			break;
+		}
+		
 	};
 	
 	public ItemType getType() {
@@ -21,9 +32,7 @@ public class Item extends GameObject{
 
 	@Override
 	public void tick() {
-		if(count<60) {
-			count++;
-		}
+		count++;
 		int difX = Game.gameInstance.player.getX()-getCX();
 		int difY = Game.gameInstance.player.getY()-getCY();
 		if(count>50 && Math.abs(difX)<10) {
@@ -46,10 +55,15 @@ public class Item extends GameObject{
 				}
 			}
 		}
+		if(count > 600) {
+			Game.gameInstance.handler.removeObject(this);
+		}
 	}
 
 	@Override
 	public void render(Graphics g, double p) {
-		g.drawImage(sprite, x, y, w, h, null);
+		if(count < 480 || count / 10 % 2 == 0) {
+			g.drawImage(sprite, x, y, w, h, null);
+		}
 	}
 }

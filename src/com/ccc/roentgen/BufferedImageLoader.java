@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class BufferedImageLoader {
 
-	public static BufferedImage[] spritesheets = new BufferedImage[2];
+	public static BufferedImage[] spritesheets = new BufferedImage[3];
 	public static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
 	public static BufferedImage loadImage(String path) {
