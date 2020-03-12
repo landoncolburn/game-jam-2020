@@ -83,6 +83,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void stop() {
+		System.out.println("Player has died.\nGame ending...");
 		running = false;
 		try {
 			thread.join();

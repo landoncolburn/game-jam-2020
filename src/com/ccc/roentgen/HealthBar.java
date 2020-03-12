@@ -24,9 +24,9 @@ public class HealthBar extends GameObject {
 		if(hp>0) {
 			hp -= i;
 		}
-//		if(hp<=0) {
-//			death();
-//		}
+		if(hp<=0) {
+			death();
+		}
 	}
 	
 	public void addHP(int i) {
