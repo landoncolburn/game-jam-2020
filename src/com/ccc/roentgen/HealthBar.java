@@ -24,6 +24,9 @@ public class HealthBar extends GameObject {
 		if(hp>0) {
 			hp -= i;
 		}
+//		if(hp<=0) {
+//			death();
+//		}
 	}
 	
 	public void addHP(int i) {
@@ -41,6 +44,10 @@ public class HealthBar extends GameObject {
 		}
 		g.drawImage(bar, x, y, w, h, null);
 
+	}
+	
+	public void death() {
+		Game.gameInstance.stop();
 	}
 
 }
