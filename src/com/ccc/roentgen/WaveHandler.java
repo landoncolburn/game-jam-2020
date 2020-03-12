@@ -79,7 +79,7 @@ public class WaveHandler {
 			for(int i = 0; i < this.waveNumber; i++) {
 				if(input.hasNextLine()) {
 					input.nextLine();
-				} else { return; }
+				} else { input.close();return; }
 			}
 			
 			String type;
@@ -97,7 +97,7 @@ public class WaveHandler {
 					}
 				}
 			}
-			input.close();;
+			input.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("waves.wavedata not found, wave will not start");

@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.image.BufferStrategy;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import com.ccc.roentgen.audio.AudioManager;
 
@@ -28,8 +26,8 @@ public class Game extends Canvas implements Runnable {
 
 	public Dimension size;
 	public final Dimension levelSize;
-	private Queue<Enemy> enemyQueue = new LinkedList<Enemy>();
-	private int spawnCount;
+//	private Queue<Enemy> enemyQueue = new LinkedList<Enemy>();
+//	private int spawnCount;
 	public WaveHandler waveHandler;
 	
 	public MouseMotionInput mmi;
