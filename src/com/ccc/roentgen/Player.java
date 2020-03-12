@@ -33,7 +33,7 @@ public class Player extends GameObject {
 		animations[1][2] = BufferedImageLoader.getSprite(0, 256, 0, 32, 48);
 		animations[2][0] = BufferedImageLoader.getSprite(0, 288, 0, 32, 48);
 		animations[2][1] = BufferedImageLoader.getSprite(0, 320, 0, 32, 48);
-		animations[2][2] = BufferedImageLoader.getSprite(0, 352, 0, 32, 48);
+		//animations[2][2] = BufferedImageLoader.getSprite(0, 352, 0, 32, 48);
 		animations[3][0] = BufferedImageLoader.getSprite(0, 64, 0, 32, 48);
 		animations[3][1] = BufferedImageLoader.getSprite(0, 32, 0, 32, 48);
 		animations[3][2] = BufferedImageLoader.getSprite(0, 0, 0, 32, 48);

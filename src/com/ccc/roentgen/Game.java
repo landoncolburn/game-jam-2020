@@ -28,9 +28,9 @@ public class Game extends Canvas implements Runnable {
 
 	public Dimension size;
 	public final Dimension levelSize;
-	private int numOfZoms = 6;
 	private Queue<Enemy> enemyQueue = new LinkedList<Enemy>();
 	private int spawnCount;
+	public WaveHandler waveHandler;
 	
 	public MouseMotionInput mmi;
 	public MouseInput mi;
@@ -49,13 +49,15 @@ public class Game extends Canvas implements Runnable {
 		
 		AudioManager.initializeAudioManager();
 		
+		gameInstance = this;
+		
 		size = new Dimension(1000, 600);
 		levelSize = new Dimension(1500, 1000);
 		new Window("Roentgen", size, this);
 
 		handler = new Handler();
+		waveHandler = new WaveHandler();
 		gui = new GUIHandler();
-		gameInstance = this;
 
 		mmi = new MouseMotionInput();
 		mi = new MouseInput();
@@ -177,15 +179,7 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		
-		if(enemyQueue.size() == 0) {
-			
-		} else if(spawnCount<0) {
-			spawnCount = (int)(Math.random()*1200)+600;
-			handler.addObject(enemyQueue.poll());
-		} else {
-			spawnCount--;
-		}
-
+		waveHandler.tick();
 		handler.tick();
 		gui.tick();
 	}
@@ -196,9 +190,6 @@ public class Game extends Canvas implements Runnable {
 		player = new Player(50, 50);
 		inventory = new Inventory();
 		handler.addObject(player);
-		for(int i = 0; i < numOfZoms; i++) {
-			enemyQueue.add(new Enemy((int)(Math.random()*2000)-1000, (int)(Math.random()*2000)-1000));
-		}
 		healthBar = new HealthBar(size.width);
 		gui.addObject(healthBar);
 	}

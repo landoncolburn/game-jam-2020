@@ -17,8 +17,8 @@ public abstract class GameObject {
 	public boolean pushingX = true;
 	public boolean pushingY = true;
 	
-	protected BufferedImage healthBar = BufferedImageLoader.loadImage("enemy_health_bar.png");
-	protected BufferedImage healthBarInside = BufferedImageLoader.loadImage("enemy_health_bar_inside.png");
+	protected BufferedImage healthBar = BufferedImageLoader.loadImage("health_bar.png");
+	protected BufferedImage healthBarInside = BufferedImageLoader.loadImage("health_bar_inside.png");
 
 	public GameObject(int x, int y, int w, int h, boolean s, ID i) {//GameObject constructor
 		this.x = x;

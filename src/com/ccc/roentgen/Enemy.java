@@ -24,7 +24,7 @@ public class Enemy extends GameObject {
 		new Drop(0.20, ItemType.BAT),
 	};
 
-	public Enemy(int x, int y) {
+	public Enemy(int x, int y, EnemyType e) {
 		super(x, y, 64, 96, true, ID.ENEMY);
 		sprite[0] = BufferedImageLoader.getSprite(1, 0, 0, 32, 48);
 		sprite[1] = BufferedImageLoader.getSprite(1, 32, 0, 32, 48);
