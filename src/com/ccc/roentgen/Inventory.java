@@ -45,6 +45,9 @@ public class Inventory extends GameObject {
 			for(int x = 0; x < inv[y].length; x++) {
 				if(inv[y][x] == null) {
 					inv[y][x] = i;
+					if(x == selectedIndex && y == 0) {
+						select(x);
+					}
 					break outer;
 				}
 			}
@@ -146,7 +149,7 @@ public class Inventory extends GameObject {
 				for(int i = 0; i < 5; i++) {
 					g.drawImage(deselected, x + (58 * i), y + (openingProgress * j), 48, 48, null);
 					if(inv[j][i] != null) {
-						g.drawImage(inv[j][i].getSprite(), x + 8 + (58 * i), y + 8 + (openingProgress * j), 48, 48, null);
+						g.drawImage(inv[j][i].getSprite(), x + 8 + (58 * i), y + 8 + (openingProgress * j), null);
 					}
 				}
 			}

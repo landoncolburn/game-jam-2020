@@ -5,7 +5,8 @@ public enum ItemType {
 	HEART(true, false),
 	TURRET(false, false), 
 	BAT(false, true), 
-	COIN(true, false);
+	COIN(true, false),
+	AXE(false, true);
 	
 	public boolean useOnPickup, isWeapon;
 	

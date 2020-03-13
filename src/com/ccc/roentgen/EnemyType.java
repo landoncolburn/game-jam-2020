@@ -10,7 +10,8 @@ public enum EnemyType {
 			Drop[] d = {
 				new Drop(0.80, ItemType.COIN),
 				new Drop(0.50, ItemType.HEART),
-				new Drop(0.20, ItemType.BAT)
+				new Drop(0.20, ItemType.BAT),
+				new Drop(0.05, ItemType.AXE)
 			};
 			return d;
 		}
@@ -68,7 +69,8 @@ public enum EnemyType {
 				new Drop(1.00, ItemType.COIN),
 				new Drop(0.80, ItemType.COIN),
 				new Drop(0.60, ItemType.COIN),
-				new Drop(1.00, ItemType.HEART)
+				new Drop(1.00, ItemType.HEART),
+				new Drop(0.20, ItemType.AXE)
 			};
 			return d;
 		}

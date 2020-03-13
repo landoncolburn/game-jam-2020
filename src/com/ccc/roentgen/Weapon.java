@@ -14,6 +14,11 @@ public class Weapon extends Item {
 			range = 150;
 			cooldownTicks = 60;
 			break;
+		case AXE:
+			damage = 2;
+			range = 75;
+			cooldownTicks = 120;
+			break;
 		default:
 			damage = 1;
 			range = 100;
@@ -33,5 +38,8 @@ public class Weapon extends Item {
 	public int getCooldownTicks() {
 		return cooldownTicks;
 	}
-
+	
+	public String toString() {
+		return getType() + " " + damage + " " + range + " " + cooldownTicks;
+	}
 }

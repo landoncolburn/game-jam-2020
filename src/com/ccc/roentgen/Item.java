@@ -27,6 +27,9 @@ public class Item extends GameObject {
 		case COIN:
 			sprite = BufferedImageLoader.getSprite(2, 64, 0, 32, 32);
 			break;
+		case AXE:
+			sprite = BufferedImageLoader.getSprite(2, 96, 0, 32, 32);
+			break;
 		}
 		
 	}
