@@ -3,8 +3,8 @@ package com.ccc.roentgen;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -63,11 +63,12 @@ public class WaveHandler {
 		}
 		
 		try {
-			input = new BufferedReader(new FileReader("src/waves.wavedata"));
+			InputStream is = getClass().getResourceAsStream("/waves.wavedata");
+			input = new BufferedReader(new InputStreamReader(is));
 			waves.addAll(input.lines().map(parseWave).collect(Collectors.toList()));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("waves.wavedata not found, wave will not start");
+		} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println("waves.wavedata not found, wave will not start");
 		}
 		nextWave();
 	}
