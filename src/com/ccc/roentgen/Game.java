@@ -19,16 +19,17 @@ public class Game extends Canvas implements Runnable {
 	private static double MS_PER_UPDATE = 120.0;
 
 	public static Game gameInstance;
+	private Thread thread;
 	
 	public Handler handler;
 	public GUIHandler gui;
 	public WaveHandler waveHandler;
 
-	private Thread thread;
 	private boolean running = false;
 	private boolean paused = false;
 	public boolean beingDamaged = false;
 	public boolean eBrake = false;
+	private boolean playerExist = false;
 
 	public Dimension size;
 	public final Dimension levelSize;
@@ -54,7 +55,6 @@ public class Game extends Canvas implements Runnable {
 		size = new Dimension(1000, 600);
 		levelSize = new Dimension(1500, 1000);
 		handler = new Handler();
-		waveHandler = new WaveHandler();
 		gui = new GUIHandler();
 		mmi = new MouseMotionInput();
 		mi = new MouseInput();
@@ -78,7 +78,8 @@ public class Game extends Canvas implements Runnable {
 		BufferedImageLoader.loadSpriteSheet(2, "itemsheet.png");
 		
 		start();
-		createWorld();
+		addMainMenu();
+//		createWorld();
 	}
 
 	public void start() {
@@ -177,23 +178,29 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < handler.gameObjects.size(); i++) {
 			if (handler.gameObjects.get(i).getID() == ID.PLAYER) {
 				camera.tick(handler.gameObjects.get(i));
+				playerExist = true;
 			}
 		}
-		
-		waveHandler.tick();
+		if(!playerExist) camera.tick(0, 0);
+		if(waveHandler != null) waveHandler.tick();
 		handler.tick();
 		gui.tick();
 	}
 
 	// Runs before first tick method
 	public void createWorld() {
-		handler.addObject(new Base());
+		healthBar = new HealthBar(size.width);
 		player = new Player(50, 50);
 		inventory = new Inventory();
+		handler.addObject(new Base());
+		waveHandler = new WaveHandler();
 		handler.addObject(player);
-		healthBar = new HealthBar(size.width);
 		gui.addObject(healthBar);
 		gui.addObject(inventory);
+	}
+	
+	public void addMainMenu() {
+		handler.addObject(new Button(0, 0));
 	}
 
 	public static void main(String[] args) {

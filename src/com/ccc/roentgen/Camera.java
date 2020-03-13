@@ -16,6 +16,11 @@ public class Camera {
 		y += ((object.getY() - y) - 600 / 2) * 0.05f;
 
 	}
+	
+	public void tick(int ax, int ay) {
+		x += ((ax - x) - 1000 / 2) * 0.05f;
+		y += ((ay - y) - 600 / 2) * 0.05f;
+	}
 
 	public float getX() {
 		return x;

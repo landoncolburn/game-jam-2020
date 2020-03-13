@@ -42,7 +42,7 @@ public class WaveHandler {
 					spawnsObj.add(new EnemySpawn(rate, y));
 				}
 			}
-		}
+		} 
 		return new Wave(spawnsObj, count);
 	};
 	
