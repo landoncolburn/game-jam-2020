@@ -26,8 +26,6 @@ public class Game extends Canvas implements Runnable {
 
 	public Dimension size;
 	public final Dimension levelSize;
-//	private Queue<Enemy> enemyQueue = new LinkedList<Enemy>();
-//	private int spawnCount;
 	public WaveHandler waveHandler;
 	
 	public MouseMotionInput mmi;

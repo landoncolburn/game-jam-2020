@@ -14,22 +14,21 @@ public class Enemy extends GameObject {
 	private boolean dead = false;
 	private int deadCount = 0;
 	
+	private int speed = 0;
+	
 	private int stunFrames = 0;
 	
 	private BufferedImage[] sprite = new BufferedImage[4];
 	
-	private Drop[] drops = {
-		new Drop(0.80, ItemType.COIN),
-		new Drop(0.50, ItemType.HEART),
-		new Drop(0.20, ItemType.BAT),
-	};
+	private Drop[] drops;
 
 	public Enemy(int x, int y, EnemyType e) {
 		super(x, y, 64, 96, true, ID.ENEMY);
-		sprite[0] = BufferedImageLoader.getSprite(1, 0, 0, 32, 48);
-		sprite[1] = BufferedImageLoader.getSprite(1, 32, 0, 32, 48);
-		sprite[2] = BufferedImageLoader.getSprite(1, 64, 0, 32, 48);
-		sprite[3] = BufferedImageLoader.getSprite(1, 96, 0, 32, 48);
+		drops = e.getDrops();
+		sprite = e.getFrames();
+		speed = e.getSpeed();
+		maxHP = e.getHP();
+		hp = maxHP;
 		target = Game.gameInstance.handler.getByID(ID.PLAYER).get(0);
 	}
 
@@ -63,35 +62,35 @@ public class Enemy extends GameObject {
 				if(Math.abs(getCX()-0)<2) {
 					velX = 0;
 				} else if(getCX()<0) {
-					velX = 1;
+					velX = speed;
 				} else if(getCX()>0) {
-					velX = -1;
+					velX = -speed;
 				}
 				
 				if(Math.abs(getCY()-0)<2) {
 					velY = 0;
 				} else if(getCY()<0) {
-					velY = 1;
+					velY = speed;
 				} else if(getCY()>0) {
-					velY = -1;
+					velY = -speed;
 				}
 			} else {
 				if(Math.abs(getCX()-target.getX())<5) {
 					velX = 0;
 					closeX = true;
 				} else if(getCX()<target.getX()) {
-					velX = 1;
+					velX = speed;
 				} else if(getCX()>target.getX()) {
-					velX = -1;
+					velX = -speed;
 				}
 				
 				if(Math.abs(getCY()-target.getY())<5) {
 					velY = 0;
 					closeY = true;
 				} else if(getCY()<target.getY()) {
-					velY = 1;
+					velY = speed;
 				} else if(getCY()>target.getY()) {
-					velY = -1;
+					velY = -speed;
 				}
 			}
 		} else if(!dead && (pushingX||pushingY)){
@@ -124,14 +123,10 @@ public class Enemy extends GameObject {
 			hp--;
 		}
 		if(hp<1) {
-			kill();
+			dead=true;
 		}
 		d = 2;
 		stunFrames = 30;
-	}
-	
-	public void kill() {		
-		dead = true;
 	}
 	
 	public void drop() {

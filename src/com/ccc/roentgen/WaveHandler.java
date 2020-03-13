@@ -2,10 +2,14 @@ package com.ccc.roentgen;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.Queue;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class WaveHandler {
 	
@@ -17,28 +21,53 @@ public class WaveHandler {
 	
 	private int waveNumber;
 	
-	private LinkedList<EnemyType> enemysInRound;
+	private Queue<Wave> waves = new LinkedList<Wave>();
+	public static Queue<EnemyType> enemies = new LinkedList<EnemyType>();
 	
 	private int ticksUntilNextWave;
 	
-	private boolean waveOver;
+	private boolean waveOver = false;
+	
+	private Function<String, Wave> parseWave = (s) -> {
+		String[] spawns = s.split(",");
+		EnemyType[] types = EnemyType.values();
+		ArrayList<EnemySpawn> spawnsObj = new ArrayList<EnemySpawn>(); 
+		for(String t : spawns) {
+			for(EnemyType y : types) {
+				if(t.contains(y.toString())) {
+					double rate = Double.parseDouble(t.substring(t.indexOf("(")+1, t.indexOf(")")));
+					spawnsObj.add(new EnemySpawn(rate, y));
+				}
+			}
+		}
+		return new Wave(spawnsObj);
+	};
 	
 	public WaveHandler() {
 		int x, y;
-		waveOver = false;
 		this.waveNumber = 0;
 		spawners = new Spawner[numSpawners];
-		enemysInRound = new LinkedList<EnemyType>();
 		
 		for(int i = 0; i < numSpawners; i++) {
 			do {
 				x = (int)(Math.random() * Game.gameInstance.levelSize.width);
 				y = (int)(Math.random() * Game.gameInstance.levelSize.height);
-			} while(new Rectangle(MAX_DISTANCE_TO_BORDER, MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.width - MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.height - MAX_DISTANCE_TO_BORDER).contains(new Point(x, y)));
+			} while(new Rectangle(MAX_DISTANCE_TO_BORDER, MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.width - MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.height - MAX_DISTANCE_TO_BORDER)
+					.contains(new Point(x, y)));
 			
 			spawners[i] = new Spawner(x - Game.gameInstance.levelSize.width / 2, y - Game.gameInstance.levelSize.height / 2);
 			Game.gameInstance.handler.addObject(spawners[i]);
 		}
+		
+		try {
+			BufferedReader input = new BufferedReader(new FileReader("src/waves.wavedata"));
+			waves.addAll(input.lines().map(parseWave).collect(Collectors.toList()));
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("waves.wavedata not found, wave will not start");
+		}
+		nextWave();
 	}
 	
 	public void tick() {
@@ -58,10 +87,8 @@ public class WaveHandler {
 	}
 	
 	private boolean isWaveOver() {
-		for(Spawner s : spawners) {
-			if(!s.isEmpty()) {
-				return false;
-			}
+		if(!enemies.isEmpty()) {
+			return false;
 		}
 		for(GameObject o : Game.gameInstance.handler.gameObjects) {
 			if(o instanceof Enemy) {
@@ -72,43 +99,15 @@ public class WaveHandler {
 	}
 	
 	public void nextWave() {
-		enemysInRound = new LinkedList<EnemyType>();
-		Scanner input;
-		try {
-			input = new Scanner(new File("src/waves.wavedata"));
-			for(int i = 0; i < this.waveNumber; i++) {
-				if(input.hasNextLine()) {
-					input.nextLine();
-				} else { input.close();return; }
-			}
-			
-			String type;
-			int amount;
-			while(input.hasNext()) {
-				type = input.next();
-				if(type.equals(";")) { break; }
-				amount = input.nextInt();
-				for(EnemyType t : EnemyType.values()) {
-					if(t.name().equals(type)) {
-						for(int i = 0; i < amount; i++) {
-							this.enemysInRound.add(t);
-						}
-						break;
-					}
-				}
-			}
-			input.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.err.println("waves.wavedata not found, wave will not start");
+		if(waves.size() == 0) {
+			return;
 		}
-		
-		while(enemysInRound.size() > 0) {
-			spawners[(int)(Math.random() * numSpawners)].add(enemysInRound.remove((int)(Math.random() * enemysInRound.size())));
-		}
+		enemies.clear();
+		enemies.addAll(waves.poll().getEnemies());
 		
 		waveNumber++;
 		System.out.printf("Starting wave %d%n", waveNumber);
+		waveOver = false;
 	}
 	
 	public void kill() {
@@ -119,10 +118,6 @@ public class WaveHandler {
 	
 	public int getWaveNumber() {
 		return this.waveNumber;
-	}
-	
-	public void setWaveNumber(int newWaveNumber) {
-		this.waveNumber = newWaveNumber;
 	}
 	
 	public void setNumSpawners(int newNumSpawners) {

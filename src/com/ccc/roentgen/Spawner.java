@@ -3,8 +3,6 @@ package com.ccc.roentgen;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Spawner extends GameObject {
 	
@@ -13,37 +11,26 @@ public class Spawner extends GameObject {
 	
 	private BufferedImage image;
 	
-	private Queue<EnemyType> enemies;
-	
 	private int ticksUntilSpawn;
 	
 	public Spawner(int x, int y) {
 		super(x, y, 5, 5, true, ID.SPAWNER);
 		image = BufferedImageLoader.loadImage("spawner.png");
-		enemies = new LinkedList<EnemyType>();
 		ticksUntilSpawn = (int)(Math.random() * MAX_TICKS_UNTIL_SPAWN);
 	}
 	
 	private void updateTicksUntilSpawn() {
 		ticksUntilSpawn = (int)(Math.random() * (MAX_TICKS_UNTIL_SPAWN - MIN_TICKS_UNTIL_SPAWN) + MIN_TICKS_UNTIL_SPAWN);
 	}
-	
-	public void add(EnemyType e) {
-		enemies.add(e);
-	}
-	
-	public boolean isEmpty() {
-		return enemies.isEmpty();
-	}
 
 	@Override
 	public void tick() {
-		if(enemies.isEmpty()) { return; }
+		if(WaveHandler.enemies.isEmpty()) { return; }
 		if(ticksUntilSpawn > 0) {
 			ticksUntilSpawn--;
 		} 
 		else {
-			Game.gameInstance.handler.addObject(new Enemy(this.x, this.y, enemies.poll()));
+			Game.gameInstance.handler.addObject(new Enemy(this.x, this.y, WaveHandler.enemies.poll()));
 			updateTicksUntilSpawn();
 		}
 		
