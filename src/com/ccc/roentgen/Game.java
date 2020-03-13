@@ -3,11 +3,13 @@ package com.ccc.roentgen;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 
 import com.ccc.roentgen.audio.AudioManager;
 
@@ -37,6 +39,8 @@ public class Game extends Canvas implements Runnable {
 	public Player player;
 	public Inventory inventory;
 	public boolean beingDamaged = false;
+	
+	public Font pixelFont;
 
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
 			new Rectangle(0, 0, 64, 64));
@@ -64,6 +68,12 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseListener(mi);
 		this.addKeyListener(ki);
 		this.addMouseMotionListener(mmi);
+		
+		try {
+			pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/pixelsix00.ttf")).deriveFont(16f);
+		} catch (Exception e) {
+			
+		}
 
 		BufferedImageLoader.loadSpriteSheet(0, "spritesheet.png");
 		BufferedImageLoader.loadSpriteSheet(1, "enemy.png");
@@ -188,6 +198,7 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(player);
 		healthBar = new HealthBar(size.width);
 		gui.addObject(healthBar);
+		gui.addObject(inventory);
 	}
 
 	public static void main(String[] args) {

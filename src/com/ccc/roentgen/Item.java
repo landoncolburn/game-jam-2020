@@ -3,7 +3,9 @@ package com.ccc.roentgen;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class Item extends GameObject{
+public class Item extends GameObject {
+	
+	private static final int TICKS_BEFORE_DESPAWN = 600;
 
 	private ItemType type;
 	private BufferedImage sprite;
@@ -27,10 +29,14 @@ public class Item extends GameObject{
 			break;
 		}
 		
-	};
+	}
 	
 	public ItemType getType() {
 		return type;
+	}
+	
+	public BufferedImage getSprite() {
+		return sprite;
 	}
 
 	@Override
@@ -41,7 +47,7 @@ public class Item extends GameObject{
 		if(count>50 && Math.abs(difX)<10) {
 			if(Math.abs(difY)<10) {
 				Game.gameInstance.handler.removeObject(this);
-				action();
+				pickup();
 			}
 		}
 		if(Math.abs(difX)<100) {
@@ -58,12 +64,22 @@ public class Item extends GameObject{
 				}
 			}
 		}
-		if(count > 600) {
+		if(count > TICKS_BEFORE_DESPAWN) {
 			Game.gameInstance.handler.removeObject(this);
 		}
 	}
 	
-	public void action() {
+	public void pickup() {
+		if(type.useOnPickup) {
+			use();
+		} else if(type.isWeapon) {
+			Game.gameInstance.inventory.add(new Weapon(type));
+		} else {
+			Game.gameInstance.inventory.add(this);
+		}
+	}
+	
+	public void use() {
 		switch(type) {
 		case HEART:
 			Game.gameInstance.healthBar.addHP(20);
@@ -72,20 +88,18 @@ public class Item extends GameObject{
 			Game.gameInstance.inventory.changeCoins(1);
 			break;
 		default:
-			Game.gameInstance.inventory.add(this);
 			break;
 		}
 	}
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "Item: " + getType();
 	}
 
 	@Override
 	public void render(Graphics g, double p) {
-		if(count < 480 || count / 10 % 2 == 0) {
+		if(count < TICKS_BEFORE_DESPAWN - 120 || count / 10 % 2 == 0) {
 			g.drawImage(sprite, x, y, w, h, null);
 		}
 	}

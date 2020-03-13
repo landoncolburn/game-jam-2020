@@ -81,9 +81,9 @@ public abstract class GameObject {
 		this.id = id;
 	}
 	
-	public void damage() {
+	public void damage(int amount) {
 		if(hp>0) {
-			hp--;
+			hp -= amount;
 		}
 	}
 	

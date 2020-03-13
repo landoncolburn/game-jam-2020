@@ -9,7 +9,7 @@ public class HealthBar extends GameObject {
 	private BufferedImage health,bar;
 
 	public HealthBar(int x) {
-		super(x/5, 10, 512, 48, false, ID.GUI);
+		super(30, 10, 512, 48, false, ID.GUI);
 		health = BufferedImageLoader.loadImage("health_bar_inside.png");
 		bar = BufferedImageLoader.loadImage("health_bar.png");
 	}

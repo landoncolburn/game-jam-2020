@@ -54,7 +54,7 @@ public class WaveHandler {
 			do {
 				x = (int)(Math.random() * Game.gameInstance.levelSize.width);
 				y = (int)(Math.random() * Game.gameInstance.levelSize.height);
-			} while(new Rectangle(MAX_DISTANCE_TO_BORDER, MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.width - MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.height - MAX_DISTANCE_TO_BORDER)
+			} while(new Rectangle(MAX_DISTANCE_TO_BORDER, MAX_DISTANCE_TO_BORDER, Game.gameInstance.levelSize.width - (2 * MAX_DISTANCE_TO_BORDER), Game.gameInstance.levelSize.height - (2 * MAX_DISTANCE_TO_BORDER))
 					.contains(new Point(x, y)));
 			
 			spawners[i] = new Spawner(x - Game.gameInstance.levelSize.width / 2, y - Game.gameInstance.levelSize.height / 2);

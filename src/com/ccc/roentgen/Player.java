@@ -10,8 +10,8 @@ public class Player extends GameObject {
 	int as = 0;
 	int d = 0;
 	int count = 0;
-	private int range = 100;
-	private int atckCool = 60;
+	private int range;
+	private int atckCool;
 	private int dashCool = 40;
 	private int dr = 0;
 
@@ -130,12 +130,22 @@ public class Player extends GameObject {
 	}
 	
 	public void attack() {
-		atckCool = 60;
+		Weapon weapon = Game.gameInstance.inventory.getWeapon();
+		int damage;
+		if(weapon == null) {
+			atckCool = 60;
+			range = 100;
+			damage = 1;
+		} else {
+			atckCool = weapon.getCooldownTicks();
+			range = weapon.getRange();
+			damage = weapon.getDamage();
+		}
 		attacking = true;
 		Ellipse2D reach = new Ellipse2D.Double(x-range/2, y-range/2, range, range);
 		for(GameObject go : Game.gameInstance.handler.getByID(ID.ENEMY)){
 			if(reach.intersects(go.getBounds())) {
-				go.damage();
+				go.damage(damage);
 				int random = (int)(Math.random()*3)+13;
 				if(go.getCX()>x) { //Enemy Right of Player
 					go.push(false, random);

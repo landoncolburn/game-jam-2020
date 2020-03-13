@@ -118,9 +118,9 @@ public class Enemy extends GameObject {
 		}
 	}
 	
-	public void damage() {
+	public void damage(int amount) {
 		if(hp>0) {
-			hp--;
+			hp -= amount;
 		}
 		if(hp<1) {
 			dead=true;
