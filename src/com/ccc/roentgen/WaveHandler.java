@@ -18,6 +18,7 @@ public class WaveHandler {
 	private int numSpawners = 4;
 	
 	private Spawner[] spawners;
+	private BufferedReader input;
 	
 	private int waveNumber;
 	
@@ -29,7 +30,8 @@ public class WaveHandler {
 	private boolean waveOver = false;
 	
 	private Function<String, Wave> parseWave = (s) -> {
-		String[] spawns = s.split(",");
+		int count = Integer.parseInt(s.substring(s.indexOf("[")+1, s.indexOf("]")));
+		String[] spawns = s.substring(s.indexOf("]")+1).split(",");
 		EnemyType[] types = EnemyType.values();
 		ArrayList<EnemySpawn> spawnsObj = new ArrayList<EnemySpawn>(); 
 		for(String t : spawns) {
@@ -40,7 +42,7 @@ public class WaveHandler {
 				}
 			}
 		}
-		return new Wave(spawnsObj);
+		return new Wave(spawnsObj, count);
 	};
 	
 	public WaveHandler() {
@@ -60,9 +62,8 @@ public class WaveHandler {
 		}
 		
 		try {
-			BufferedReader input = new BufferedReader(new FileReader("src/waves.wavedata"));
+			input = new BufferedReader(new FileReader("src/waves.wavedata"));
 			waves.addAll(input.lines().map(parseWave).collect(Collectors.toList()));
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("waves.wavedata not found, wave will not start");

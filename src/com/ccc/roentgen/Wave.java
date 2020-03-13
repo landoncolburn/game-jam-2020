@@ -5,10 +5,11 @@ import java.util.ArrayList;
 public class Wave {
 	
 	private ArrayList<EnemySpawn> spawns;
-	private int count = 10;
+	private int count;
 
-	public Wave(ArrayList<EnemySpawn> s) {
-		spawns = s;
+	public Wave(ArrayList<EnemySpawn> s, int c) {
+		this.spawns = s;
+		this.count = c;
 	}
 
 	public ArrayList<EnemyType> getEnemies(){
