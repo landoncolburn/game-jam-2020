@@ -82,10 +82,12 @@ public class WaveHandler {
 				}
 				ticksUntilNextWave = 600;
 				waveOver = true;
-				if(waveNumber%10==2) {
+				if(waveNumber%10==2 && waveNumber%100!=12) {
 					suffix = "nd";
-				} else if(waveNumber%10==1) {
+				} else if(waveNumber%10==1 && waveNumber%100!=11) {
 					suffix = "st";
+				} else if(waveNumber%10==3 && waveNumber%100!=13) {
+					suffix = "rd";
 				} else {
 					suffix = "th";
 				}
