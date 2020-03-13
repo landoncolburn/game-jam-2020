@@ -32,6 +32,14 @@ public class Handler {
 	public void removeObject(GameObject object) {
 		gameObjects.remove(object);
 	}
+	
+	public void killAll() {
+		for(GameObject go : gameObjects) {
+			if(go.getID() == ID.ENEMY) {
+				go.hp = 0;
+			}
+		}
+	}
 
 	public void render(Graphics g, double p) {
 		for (int i = 0; i < gameObjects.size(); i++) {

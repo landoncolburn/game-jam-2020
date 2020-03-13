@@ -74,8 +74,14 @@ public class WaveHandler {
 	public void tick() {
 		if(!waveOver) {
 			if(isWaveOver()) {
+				if(waves.size() == 0) {
+					Game.gameInstance.gui.addObject(new GUIPopup((Game.gameInstance.size.width-300)/2, (Game.gameInstance.size.height-60)/2, PopupType.WIN, 360));
+					Game.gameInstance.eBrake = true;
+					return;
+				}
 				ticksUntilNextWave = 600;
 				waveOver = true;
+				Game.gameInstance.gui.addObject(new GUIPopup((Game.gameInstance.size.width-300)/2, (Game.gameInstance.size.height-60)/2, PopupType.NEXT, 360));
 			}
 		} else {
 			if(ticksUntilNextWave > 0) {
@@ -107,7 +113,6 @@ public class WaveHandler {
 		enemies.addAll(waves.poll().getEnemies());
 		
 		waveNumber++;
-		System.out.printf("Starting wave %d%n", waveNumber);
 		waveOver = false;
 	}
 	

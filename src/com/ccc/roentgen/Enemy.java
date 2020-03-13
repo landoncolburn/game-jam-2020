@@ -13,10 +13,12 @@ public class Enemy extends GameObject {
 	private int count = 0;
 	private boolean dead = false;
 	private int deadCount = 0;
+	private int specialCooldown = 360;
 	
 	private int speed = 0;
 	
 	private int stunFrames = 0;
+	private EnemyType type;
 	
 	private BufferedImage[] sprite = new BufferedImage[4];
 	
@@ -24,10 +26,11 @@ public class Enemy extends GameObject {
 
 	public Enemy(int x, int y, EnemyType e) {
 		super(x, y, 64, 96, true, ID.ENEMY);
-		drops = e.getDrops();
-		sprite = e.getFrames();
-		speed = e.getSpeed();
-		maxHP = e.getHP();
+		this.type = e;
+		drops = type.getDrops();
+		sprite = type.getFrames();
+		speed = type.getSpeed();
+		maxHP = type.getHP();
 		hp = maxHP;
 		target = Game.gameInstance.handler.getByID(ID.PLAYER).get(0);
 	}
@@ -36,6 +39,10 @@ public class Enemy extends GameObject {
 	public void tick() {
 		x+=velX;
 		y+=velY;
+		if(specialCooldown--<=0) {
+			specialCooldown = 840;
+			special();
+		}
 		if(!dead && count++>20 && d != 2) {
 			count = 0;
 			if(d==0) {
@@ -135,6 +142,22 @@ public class Enemy extends GameObject {
 				Game.gameInstance.handler.addObject(
 						new Item(getCX()+((int)(Math.random()*30)-15), getCY()+((int)(Math.random()*30)-15), dr.getType()));
 			}
+		}
+	}
+	
+	public void special() {
+		switch(type) {
+		case NECROMANCER:
+			Game.gameInstance.handler.addObject(new Enemy(x-50, y, EnemyType.SKELETON));
+			Game.gameInstance.handler.addObject(new Enemy(x+50, y, EnemyType.SKELETON));
+			Game.gameInstance.handler.addObject(new Enemy(x, y-50, EnemyType.SKELETON));
+			Game.gameInstance.handler.addObject(new Enemy(x, y+50, EnemyType.SKELETON));
+			break;
+		case SKELETON:
+			speed = 3;
+			break;
+		case ZOMBIE:
+			break;
 		}
 	}
 	

@@ -41,6 +41,7 @@ public class Game extends Canvas implements Runnable {
 	public boolean beingDamaged = false;
 	
 	public Font pixelFont;
+	public boolean eBrake = false;
 
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
 			new Rectangle(0, 0, 64, 64));
@@ -91,7 +92,6 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void stop() {
-		System.out.println("Player has died.\nGame ending...");
 		running = false;
 		try {
 			thread.join();
@@ -179,6 +179,9 @@ public class Game extends Canvas implements Runnable {
 
 	// Runs every frame
 	public void tick() {
+		if(eBrake) {
+			return;
+		}
 		for (int i = 0; i < handler.gameObjects.size(); i++) {
 			if (handler.gameObjects.get(i).getID() == ID.PLAYER) {
 				camera.tick(handler.gameObjects.get(i));
