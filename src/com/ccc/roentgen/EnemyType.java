@@ -26,7 +26,7 @@ public enum EnemyType {
 		}
 
 		public int getHP() {
-			return 10;
+			return 5;
 		}
 
 		public int getSpeed() {
@@ -37,7 +37,8 @@ public enum EnemyType {
 		public int row = 1;
 		public Drop[] getDrops() {
 			Drop[] d = {
-					
+				new Drop(0.80, ItemType.COIN),
+				new Drop(0.10, ItemType.HEART)
 			};
 			return d;
 		}
@@ -64,7 +65,10 @@ public enum EnemyType {
 		public int row = 2;
 		public Drop[] getDrops() {
 			Drop[] d = {
-					
+				new Drop(1.00, ItemType.COIN),
+				new Drop(0.80, ItemType.COIN),
+				new Drop(0.60, ItemType.COIN),
+				new Drop(1.00, ItemType.HEART)
 			};
 			return d;
 		}

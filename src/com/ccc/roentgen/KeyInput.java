@@ -22,7 +22,7 @@ public class KeyInput extends KeyAdapter {
 		if (key == KeyEvent.VK_S)
 			set(2, Key.DOWN);
 		if (key == KeyEvent.VK_D)
-			set(3, Key.DOWN);
+			set(3, Key.DOWN); 
 		if (key == KeyEvent.VK_SPACE)
 			set(4, Key.DOWN);
 		if (key == KeyEvent.VK_SHIFT)

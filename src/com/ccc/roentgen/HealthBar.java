@@ -47,7 +47,7 @@ public class HealthBar extends GameObject {
 	}
 	
 	public void death() {
-		Game.gameInstance.gui.addObject(new GUIPopup((Game.gameInstance.size.width-300)/2, (Game.gameInstance.size.height-60)/2, PopupType.DEAD, 360));
+		Game.gameInstance.gui.addObject(new GUIPopup("The enemies were just too much for you, you have died.", 360));
 		Game.gameInstance.eBrake = true;
 	}
 

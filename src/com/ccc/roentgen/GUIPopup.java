@@ -1,34 +1,17 @@
 package com.ccc.roentgen;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 public class GUIPopup extends GameObject {
 	
-	private PopupType type;
+	private String text;
 	private int counter = 0;
 	private int expiryCount;
-	private BufferedImage image;
 
-	public GUIPopup(int x, int y, PopupType t, int ex) {
-		super(x, y, 0, 0, true, ID.GUI);
-		this.type = t;
+	public GUIPopup(String text, int ex) {
+		super(0, 0, 0, 0, true, ID.GUI);
+		this.text = text;
 		this.expiryCount = ex;
-		setImage();
-	}
-
-	private void setImage() {
-		switch(type) {
-			case NEXT:
-				image = BufferedImageLoader.loadImage("next_wave.png");
-				break;
-			case DEAD:
-				image = BufferedImageLoader.loadImage("death.png");
-				break;
-			case WIN:
-				image = BufferedImageLoader.loadImage("winner.png");
-				break;
-		}
 	}
 
 	@Override
@@ -41,7 +24,8 @@ public class GUIPopup extends GameObject {
 
 	@Override
 	public void render(Graphics g, double p) {
-		g.drawImage(image, x, y, null);
+		g.setFont(Game.gameInstance.pixelFont);
+		g.drawString(text, (Game.gameInstance.size.width - g.getFontMetrics().stringWidth(text))/2, Game.gameInstance.levelSize.height/4);
 	}
 
 }

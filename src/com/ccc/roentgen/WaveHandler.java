@@ -20,7 +20,7 @@ public class WaveHandler {
 	private Spawner[] spawners;
 	private BufferedReader input;
 	
-	private int waveNumber;
+	public static int waveNumber;
 	
 	private Queue<Wave> waves = new LinkedList<Wave>();
 	public static Queue<EnemyType> enemies = new LinkedList<EnemyType>();
@@ -28,6 +28,7 @@ public class WaveHandler {
 	private int ticksUntilNextWave;
 	
 	private boolean waveOver = false;
+	private String suffix;
 	
 	private Function<String, Wave> parseWave = (s) -> {
 		int count = Integer.parseInt(s.substring(s.indexOf("[")+1, s.indexOf("]")));
@@ -47,7 +48,7 @@ public class WaveHandler {
 	
 	public WaveHandler() {
 		int x, y;
-		this.waveNumber = 0;
+		waveNumber = 1;
 		spawners = new Spawner[numSpawners];
 		
 		for(int i = 0; i < numSpawners; i++) {
@@ -75,13 +76,20 @@ public class WaveHandler {
 		if(!waveOver) {
 			if(isWaveOver()) {
 				if(waves.size() == 0) {
-					Game.gameInstance.gui.addObject(new GUIPopup((Game.gameInstance.size.width-300)/2, (Game.gameInstance.size.height-60)/2, PopupType.WIN, 360));
+					Game.gameInstance.gui.addObject(new GUIPopup("You survived.", 360));
 					Game.gameInstance.eBrake = true;
 					return;
 				}
 				ticksUntilNextWave = 600;
 				waveOver = true;
-				Game.gameInstance.gui.addObject(new GUIPopup((Game.gameInstance.size.width-300)/2, (Game.gameInstance.size.height-60)/2, PopupType.NEXT, 360));
+				if(waveNumber%10==2) {
+					suffix = "nd";
+				} else if(waveNumber%10==1) {
+					suffix = "st";
+				} else {
+					suffix = "th";
+				}
+				Game.gameInstance.gui.addObject(new GUIPopup("The " + waveNumber + suffix + " wave is coming, get ready", 360));
 			}
 		} else {
 			if(ticksUntilNextWave > 0) {
@@ -123,7 +131,7 @@ public class WaveHandler {
 	}
 	
 	public int getWaveNumber() {
-		return this.waveNumber;
+		return waveNumber;
 	}
 	
 	public void setNumSpawners(int newNumSpawners) {
