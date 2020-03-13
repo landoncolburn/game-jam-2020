@@ -19,52 +19,49 @@ public class Game extends Canvas implements Runnable {
 	private static double MS_PER_UPDATE = 120.0;
 
 	public static Game gameInstance;
+	
 	public Handler handler;
 	public GUIHandler gui;
+	public WaveHandler waveHandler;
 
 	private Thread thread;
 	private boolean running = false;
 	private boolean paused = false;
+	public boolean beingDamaged = false;
+	public boolean eBrake = false;
 
 	public Dimension size;
 	public final Dimension levelSize;
-	public WaveHandler waveHandler;
 	
 	public MouseMotionInput mmi;
 	public MouseInput mi;
 	public KeyInput ki;
-	public Camera camera;
 	
+	public Camera camera;
 	public HealthBar healthBar;
 	public Player player;
 	public Inventory inventory;
-	public boolean beingDamaged = false;
 	
 	public Font pixelFont;
-	public boolean eBrake = false;
-
 	private TexturePaint paint = new TexturePaint(BufferedImageLoader.loadImage("backgroundtile.png"),
 			new Rectangle(0, 0, 64, 64));
 
-	public Game() {//Game Constructor
+	public Game() {
 		
 		AudioManager.initializeAudioManager();
 		
 		gameInstance = this;
-		
 		size = new Dimension(1000, 600);
 		levelSize = new Dimension(1500, 1000);
-		new Window("Roentgen", size, this);
-
 		handler = new Handler();
 		waveHandler = new WaveHandler();
 		gui = new GUIHandler();
-
 		mmi = new MouseMotionInput();
 		mi = new MouseInput();
 		ki = new KeyInput();
-
 		camera = new Camera(0, 0);
+		
+		new Window("Roentgen", size, this);
 
 		this.addMouseListener(mi);
 		this.addKeyListener(ki);
@@ -73,7 +70,7 @@ public class Game extends Canvas implements Runnable {
 		try {
 			pixelFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/pixelsix00.ttf")).deriveFont(16f);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 
 		BufferedImageLoader.loadSpriteSheet(0, "spritesheet.png");
@@ -81,7 +78,6 @@ public class Game extends Canvas implements Runnable {
 		BufferedImageLoader.loadSpriteSheet(2, "itemsheet.png");
 		
 		start();
-
 		createWorld();
 	}
 
@@ -126,14 +122,10 @@ public class Game extends Canvas implements Runnable {
 				if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {
 					lastUpdateTime = now - TIME_BETWEEN_UPDATES;
 				}
-
-				// Render. To do so, we need to calculate interpolation for a smooth render.
 				float interpolation = Math.min(1.0f, (float) ((now - lastUpdateTime) / TIME_BETWEEN_UPDATES));
 				render(interpolation);
 				lastRenderTime = now;
 
-				// Yield until it has been at least the target time between renders. This saves
-				// the CPU from hogging.
 				while (now - lastRenderTime < TARGET_TIME_BETWEEN_RENDERS
 						&& now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
 					Thread.yield();

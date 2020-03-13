@@ -15,6 +15,7 @@ public class Inventory extends GameObject {
 	private Item[][] inv = new Item[3][5];
 	private int coins = 0;
 	private BufferedImage deselected, selected, coin;
+	private boolean isTabUp = true;
 	
 	public Inventory() {
 		super(580, 10, 500, 48, false, ID.GUI);
@@ -109,6 +110,19 @@ public class Inventory extends GameObject {
 				select(i);
 			}
 		}
+		
+		//Check if tab is pressed
+		if(KeyInput.get(11) == Key.DOWN) {
+			if(isTabUp) {
+				isTabUp = false;
+				select((selectedIndex+1)%5);
+			}
+		}
+		
+		if(KeyInput.get(11) == Key.UP) {
+			isTabUp = true;
+		}
+		
 		//check if e is pressed
 		if(KeyInput.get(12) == Key.DOWN) {
 			if(canOpen) {
