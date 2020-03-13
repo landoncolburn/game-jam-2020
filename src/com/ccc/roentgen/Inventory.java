@@ -11,11 +11,10 @@ public class Inventory extends GameObject {
 	private boolean open;
 	private int openingProgress;
 	private Weapon equipped;
-	private int equippedIndex;
 	private int selectedIndex;
 	private Item[][] inv = new Item[3][5];
 	private int coins = 0;
-	private BufferedImage deselected, selected, equippedSlot, coin;
+	private BufferedImage deselected, selected, coin;
 	
 	public Inventory() {
 		super(580, 10, 500, 48, false, ID.GUI);
@@ -24,7 +23,6 @@ public class Inventory extends GameObject {
 		selectedIndex = 0;
 		selected = BufferedImageLoader.loadImage("inventory_selected.png");
 		deselected = BufferedImageLoader.loadImage("inventory_deselected.png");
-		equippedSlot = BufferedImageLoader.loadImage("inventory_equipped.png");
 		coin = BufferedImageLoader.getSprite(2, 64, 0, 32, 32);
 	}
 	
@@ -34,12 +32,8 @@ public class Inventory extends GameObject {
 	
 	public void select(int selectedIndex) {
 		this.selectedIndex = selectedIndex;
-	}
-	
-	public void equip(int index) {
-		equippedIndex  = index;
-		if(inv[0][index] instanceof Weapon) {
-			equipped = (Weapon)inv[0][index];
+		if(inv[0][selectedIndex] instanceof Weapon) {
+			equipped = (Weapon)inv[0][selectedIndex];
 		} else {
 			equipped = null;
 		}
@@ -50,9 +44,6 @@ public class Inventory extends GameObject {
 			for(int x = 0; x < inv[y].length; x++) {
 				if(inv[y][x] == null) {
 					inv[y][x] = i;
-					if(y == 0 && x == equippedIndex) {
-						equip(x);
-					}
 					break outer;
 				}
 			}
@@ -118,10 +109,6 @@ public class Inventory extends GameObject {
 				select(i);
 			}
 		}
-		//check if q is pressed
-		if(KeyInput.get(11) == Key.DOWN) {
-			equip(selectedIndex);
-		}
 		//check if e is pressed
 		if(KeyInput.get(12) == Key.DOWN) {
 			if(canOpen) {
@@ -143,22 +130,19 @@ public class Inventory extends GameObject {
 		if(openingProgress > 0) {
 			for(int j = 2; j > 0; j--) {
 				for(int i = 0; i < 5; i++) {
-					g.drawImage(deselected, x + (58 * i), y + (openingProgress * j), null);
+					g.drawImage(deselected, x + (58 * i), y + (openingProgress * j), 48, 48, null);
 					if(inv[j][i] != null) {
-						g.drawImage(inv[j][i].getSprite(), x + 8 + (58 * i), y + 8 + (openingProgress * j), null);
+						g.drawImage(inv[j][i].getSprite(), x + 8 + (58 * i), y + 8 + (openingProgress * j), 48, 48, null);
 					}
 				}
 			}
 		}
 		
 		for(int i = 0; i < 5; i++) {
-			if(i == equippedIndex) {
-				g.drawImage(equippedSlot, x + (58 * i), y, null);
-			}
-			else if(i == selectedIndex) {
-				g.drawImage(selected, x + (58 * i), y, null);
+			if(i == selectedIndex) {
+				g.drawImage(selected, x + (58 * i), y, 48, 48, null);
 			} else {
-				g.drawImage(deselected, x + (58 * i), y, null);
+				g.drawImage(deselected, x + (58 * i), y, 48, 48, null);
 			}
 			if(inv[0][i] != null) {
 				g.drawImage(inv[0][i].getSprite(), x + 8 + (58 * i), y + 8, null);
@@ -167,7 +151,7 @@ public class Inventory extends GameObject {
 		
 		
 		
-		g.drawImage(deselected, 922, y, null);
+		g.drawImage(deselected, 922, y, 48, 48, null);
 		g.drawImage(coin, 930, y + 8, null);
 		g.setFont(Game.gameInstance.pixelFont);
 		g.setColor(Color.white);
