@@ -189,6 +189,7 @@ public class Game extends Canvas implements Runnable {
 
 	// Runs before first tick method
 	public void createWorld() {
+		AudioManager.playSongImmediately("action_intro", "action_loop");
 		healthBar = new HealthBar(size.width);
 		player = new Player(50, 50);
 		inventory = new Inventory();
@@ -201,6 +202,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public void addMainMenu() {
 		handler.addObject(new Button(0, 0));
+		AudioManager.addToSongQueue("calm");
 	}
 
 	public static void main(String[] args) {

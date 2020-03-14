@@ -1,5 +1,6 @@
 package com.ccc.roentgen.audio;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -26,12 +27,14 @@ public class BackgroundSong {
 		
 		//LOCATION OF AUDIO FILE IN PROJECT
 		String path = "src/audio/songs/" + this.title + ".wav";
+		if(!new File(path).exists()) {
+			path = "audio/songs/" + this.title + ".wav";
+		}
 		
 		//System.out.printf("Starting playback of %s%n", title);
 		
 		try {
-			File soundFile = new File(path);
-			AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
+			AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getResourceAsStream("/audio/songs/" + title + ".wav")));
 			AudioFormat format = ais.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 			this.clip = (Clip)AudioSystem.getLine(info);
@@ -40,6 +43,7 @@ public class BackgroundSong {
 			this.clip.start();
 			this.failed = false;
 		} catch(FileNotFoundException e) {
+			e.printStackTrace();
 			System.err.printf("System cannot find song %s1 from path %s2%nEnding song%n", this.title, path);
 			this.failed = true;
 		} catch(UnsupportedAudioFileException e) {

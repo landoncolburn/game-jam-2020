@@ -37,7 +37,7 @@ public class AudioManager {
 	 */
 	public static void playSongImmediately(String... titles) {
 		songManager.stopSongs();
-		songManager.addToQueue(titles);
+		songManager.toAddImmediately(titles);
 	}
 	
 	/**

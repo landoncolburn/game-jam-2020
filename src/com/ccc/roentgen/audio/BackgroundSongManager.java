@@ -9,6 +9,7 @@ public class BackgroundSongManager extends Thread {
 	
 	private static final boolean LOOP_BY_DEFAULT = true;
 	
+	private ArrayList<String> toAddImmediately;
 	private ArrayList<String> queue;
 	private BackgroundSong playing;
 	
@@ -23,6 +24,7 @@ public class BackgroundSongManager extends Thread {
 	/**
 	 * Starts thread to manage background music
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		
@@ -33,7 +35,13 @@ public class BackgroundSongManager extends Thread {
 			if(currentTime - lastCheckTime > SECOND_IN_NANOS / UPDATES_PER_SECOND) {
 				if(this.stop) {
 					synchronized(this.queue) {
-						this.queue = new ArrayList<String>();
+						if(toAddImmediately != null) {
+							synchronized(this.toAddImmediately) {
+								this.queue = (ArrayList<String>)this.toAddImmediately.clone();
+							}
+						} else {
+							this.queue = new ArrayList<String>();
+						}
 					}
 					this.playing.stop();
 					this.playing = null;
@@ -66,7 +74,6 @@ public class BackgroundSongManager extends Thread {
 						playing = null;
 					}
 				}
-				
 				lastCheckTime = System.nanoTime();
 				
 			}
@@ -95,5 +102,14 @@ public class BackgroundSongManager extends Thread {
 	 */
 	protected void stopSongs() {
 		this.stop = true;
+	}
+	
+	protected void toAddImmediately(String... titles) {
+		toAddImmediately = new ArrayList<String>();
+		synchronized(this.toAddImmediately) {
+			for(String title : titles) {
+				this.toAddImmediately.add(title);
+			}
+		}
 	}
 }
